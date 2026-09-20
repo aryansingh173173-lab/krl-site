@@ -4,12 +4,14 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#123c2b" />
-    <meta name="description" content="Discover Krishi Ratna League Bengal—a farmer-first initiative bringing training, technology, teamwork and recognition to agricultural youth across West Bengal." />
+    <meta name="description" content="Discover Krishi Ratna League Bengal, a farmer-first initiative bringing training, technology, teamwork and recognition to agricultural youth across West Bengal." />
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
     <link rel="stylesheet" href="assets/styles.css" />
     <title>Krishi Ratna League Bengal</title>
   </head>
   <body>
+    <div class="scroll-progress" aria-hidden="true"><span></span></div>
+    <div class="cursor-glow" aria-hidden="true"></div>
     <a class="skip-link" href="#main">Skip to content</a>
 
     <header class="site-header" id="top">
@@ -36,28 +38,42 @@
 
     <main id="main">
       <section class="hero" aria-labelledby="hero-title">
-        <img class="hero-image" src="assets/krl-farm-hero.png" alt="An illustrative scene of two young farmers overlooking an integrated Bengal farm at sunrise" />
+        <video class="hero-video" autoplay muted loop playsinline preload="metadata" poster="assets/krl-farm-hero.png" aria-label="Krishi Ratna League header film">
+          <source src="assets/video-header.mp4" type="video/mp4" />
+        </video>
         <div class="hero-shade" aria-hidden="true"></div>
+        <div class="hero-grain" aria-hidden="true"></div>
         <div class="hero-content wrap">
           <p class="eyebrow" data-en="West Bengal · A new agricultural league" data-bn="পশ্চিমবঙ্গ · কৃষির নতুন লীগ">West Bengal · A new agricultural league</p>
           <h1 id="hero-title" data-en="The field is the arena. The farmer is the champion." data-bn="খেতই মাঠ। কৃষকই চ্যাম্পিয়ন।">The field is the arena.<br />The farmer is the champion.</h1>
-          <p class="hero-copy" data-en="Krishi Ratna League turns one year of farm transformation into a shared mission—uniting agricultural youth, expert support and Bengalis around the world." data-bn="কৃষিরত্ন লীগ এক বছরের কৃষি রূপান্তরকে একটি সম্মিলিত অভিযানে পরিণত করে—কৃষি-উদ্যোগী যুবসমাজ, বিশেষজ্ঞ সহায়তা ও বিশ্বজুড়ে বাঙালিদের একত্রিত করে।">Krishi Ratna League turns one year of farm transformation into a shared mission—uniting agricultural youth, expert support and Bengalis around the world.</p>
+          <p class="hero-copy" data-en="Krishi Ratna League turns one year of farm transformation into a shared mission, uniting agricultural youth, expert support and Bengalis around the world." data-bn="কৃষিরত্ন লীগ এক বছরের কৃষি রূপান্তরকে একটি সম্মিলিত অভিযানে পরিণত করে। কৃষি-উদ্যোগী যুবসমাজ, বিশেষজ্ঞ সহায়তা ও বিশ্বজুড়ে বাঙালিদের একত্রিত করে।">Krishi Ratna League turns one year of farm transformation into a shared mission, uniting agricultural youth, expert support and Bengalis around the world.</p>
           <div class="hero-actions">
             <a class="button button-primary" href="#journey" data-en="See how the league works" data-bn="লীগ কীভাবে কাজ করে">See how the league works</a>
             <a class="button button-ghost" href="#readiness" data-en="Participation updates" data-bn="অংশগ্রহণের আপডেট">Participation updates</a>
           </div>
         </div>
-        <div class="hero-note wrap">
-          <span data-en="Concept image—not a photograph of a named KRL participant." data-bn="এটি একটি ধারণাভিত্তিক ছবি—কোনও নির্দিষ্ট KRL অংশগ্রহণকারীর ছবি নয়।">Concept image—not a photograph of a named KRL participant.</span>
+        <div class="hero-utility wrap">
+          <button class="video-toggle" type="button" aria-label="Pause background video" aria-pressed="false">
+            <span class="video-toggle-icon" aria-hidden="true">Ⅱ</span>
+            <span class="video-toggle-label" data-en="Pause film" data-bn="ভিডিও থামান">Pause film</span>
+          </button>
+          <a class="scroll-cue" href="#league-scale"><span data-en="Enter the league" data-bn="লীগে প্রবেশ করুন">Enter the league</span><i aria-hidden="true"></i></a>
         </div>
       </section>
 
-      <section class="numbers" aria-label="League scale">
+      <div class="energy-strip" aria-hidden="true">
+        <div class="energy-track">
+          <span>294 CONSTITUENCIES</span><b>✦</b><span>15 ZONAL TEAMS</span><b>✦</b><span>5,000 FARM JOURNEYS</span><b>✦</b><span>ONE BENGAL</span><b>✦</b>
+          <span>294 CONSTITUENCIES</span><b>✦</b><span>15 ZONAL TEAMS</span><b>✦</b><span>5,000 FARM JOURNEYS</span><b>✦</b><span>ONE BENGAL</span><b>✦</b>
+        </div>
+      </div>
+
+      <section class="numbers" id="league-scale" aria-label="League scale">
         <div class="wrap numbers-grid">
-          <article><strong>294</strong><span data-en="Assembly constituencies" data-bn="বিধানসভা কেন্দ্র">Assembly constituencies</span></article>
-          <article><strong>15</strong><span data-en="Zonal teams" data-bn="জোনাল টিম">Zonal teams</span></article>
-          <article><strong>≈5,000</strong><span data-en="Farms envisioned" data-bn="পরিকল্পিত খামার">Farms envisioned</span></article>
-          <article><strong>1 year</strong><span data-en="Transformation journey" data-bn="রূপান্তরের যাত্রা">Transformation journey</span></article>
+          <article><strong data-count="294">0</strong><span data-en="Assembly constituencies" data-bn="বিধানসভা কেন্দ্র">Assembly constituencies</span></article>
+          <article><strong data-count="15">0</strong><span data-en="Zonal teams" data-bn="জোনাল টিম">Zonal teams</span></article>
+          <article><strong data-count="5000" data-prefix="≈" data-format="comma">0</strong><span data-en="Farms envisioned" data-bn="পরিকল্পিত খামার">Farms envisioned</span></article>
+          <article><strong data-count="1" data-suffix=" year">0</strong><span data-en="Transformation journey" data-bn="রূপান্তরের যাত্রা">Transformation journey</span></article>
         </div>
       </section>
 
@@ -65,14 +81,42 @@
         <div class="wrap manifesto-grid">
           <div>
             <p class="section-kicker" data-en="The big idea" data-bn="মূল ভাবনা">The big idea</p>
-            <h2 data-en="A league built around better farms—not a stadium." data-bn="স্টেডিয়াম নয়—উন্নত খামারকে ঘিরে তৈরি এক লীগ।">A league built around better farms—not a stadium.</h2>
+            <h2 data-en="A league built around better farms, not a stadium." data-bn="স্টেডিয়াম নয়। উন্নত খামারকে ঘিরে তৈরি এক লীগ।">A league built around better farms, not a stadium.</h2>
           </div>
           <div class="manifesto-copy">
-            <p data-en="Like a sporting league, KRL brings teams, a season and recognition. But here, every participant’s farm is the playing field. Progress is measured by how thoughtfully that farm grows—in productivity, integrated practice, management and market readiness." data-bn="একটি ক্রীড়া লীগের মতো KRL-এ রয়েছে দল, সময়কাল ও স্বীকৃতি। তবে এখানে প্রত্যেক অংশগ্রহণকারীর খামারই খেলার মাঠ। উৎপাদনশীলতা, সমন্বিত চাষ, ব্যবস্থাপনা ও বাজার-প্রস্তুতিতে খামার কতটা এগোল—সেটিই অগ্রগতির মাপকাঠি।">Like a sporting league, KRL brings teams, a season and recognition. But here, every participant’s farm is the playing field. Progress is measured by how thoughtfully that farm grows—in productivity, integrated practice, management and market readiness.</p>
+            <p data-en="Like a sporting league, KRL brings teams, a season and recognition. But here, every participant’s farm is the playing field. Progress is measured by how thoughtfully that farm grows through productivity, integrated practice, management and market readiness." data-bn="একটি ক্রীড়া লীগের মতো KRL-এ রয়েছে দল, সময়কাল ও স্বীকৃতি। তবে এখানে প্রত্যেক অংশগ্রহণকারীর খামারই খেলার মাঠ। উৎপাদনশীলতা, সমন্বিত চাষ, ব্যবস্থাপনা ও বাজার-প্রস্তুতিতে খামার কতটা এগোল, সেটিই অগ্রগতির মাপকাঠি।">Like a sporting league, KRL brings teams, a season and recognition. But here, every participant’s farm is the playing field. Progress is measured by how thoughtfully that farm grows through productivity, integrated practice, management and market readiness.</p>
             <blockquote>
-              <p data-en="“We are searching for the ratnas—the jewels—among our farmers.”" data-bn="“আমরা কৃষকদের মধ্যে থেকে রত্নদের খুঁজে বার করছি।”">“We are searching for the ratnas—the jewels—among our farmers.”</p>
-              <cite data-en="— Mahacharya Sourabh J. Sarkar, interview summary" data-bn="— মহাচার্য সৌরভ জে. সরকার, সাক্ষাৎকারের সারাংশ">— Mahacharya Sourabh J. Sarkar, interview summary</cite>
+              <p data-en="“We are searching for the ratnas, the jewels among our farmers.”" data-bn="“আমরা কৃষকদের মধ্যে থেকে রত্নদের খুঁজে বার করছি।”">“We are searching for the ratnas, the jewels among our farmers.”</p>
+              <cite data-en="Mahacharya Sourabh J. Sarkar, interview summary" data-bn="মহাচার্য সৌরভ জে. সরকার, সাক্ষাৎকারের সারাংশ">Mahacharya Sourabh J. Sarkar, interview summary</cite>
             </blockquote>
+          </div>
+        </div>
+      </section>
+
+      <section class="section role-section" id="explore">
+        <div class="wrap role-shell">
+          <div class="role-heading">
+            <p class="section-kicker light" data-en="Choose your place in the league" data-bn="লীগে আপনার ভূমিকা বেছে নিন">Choose your place in the league</p>
+            <h2 data-en="One movement. Three ways in." data-bn="এক আন্দোলন। যোগ দেওয়ার তিন পথ।">One movement. Three ways in.</h2>
+          </div>
+          <div class="role-switcher" role="tablist" aria-label="Explore the league by role">
+            <button class="role-tab is-active" type="button" role="tab" aria-selected="true" aria-controls="role-farmer" id="tab-farmer" data-role="farmer"><span>01</span><b data-en="Farmer" data-bn="কৃষক">Farmer</b></button>
+            <button class="role-tab" type="button" role="tab" aria-selected="false" aria-controls="role-team" id="tab-team" data-role="team"><span>02</span><b data-en="Team" data-bn="দল">Team</b></button>
+            <button class="role-tab" type="button" role="tab" aria-selected="false" aria-controls="role-global" id="tab-global" data-role="global"><span>03</span><b data-en="Global Bengali" data-bn="বিশ্ববাঙালি">Global Bengali</b></button>
+          </div>
+          <div class="role-stage">
+            <article class="role-panel is-active" id="role-farmer" role="tabpanel" aria-labelledby="tab-farmer">
+              <div class="role-symbol" aria-hidden="true">F</div>
+              <div><span data-en="Your field is the arena" data-bn="আপনার খেতই খেলার মাঠ">Your field is the arena</span><h3 data-en="Transform what you already have" data-bn="আপনার বর্তমান খামারকে রূপান্তর করুন">Transform what you already have</h3><p data-en="Start with your own plot. Build it over one year with practical support, modern methods and a clear transformation goal." data-bn="নিজের জমি দিয়েই শুরু করুন। বাস্তব সহায়তা, আধুনিক পদ্ধতি ও স্পষ্ট রূপান্তরের লক্ষ্য নিয়ে এক বছরে খামার গড়ুন।">Start with your own plot. Build it over one year with practical support, modern methods and a clear transformation goal.</p></div>
+            </article>
+            <article class="role-panel" id="role-team" role="tabpanel" aria-labelledby="tab-team" hidden>
+              <div class="role-symbol" aria-hidden="true">15</div>
+              <div><span data-en="Every score matters" data-bn="প্রতিটি স্কোর গুরুত্বপূর্ণ">Every score matters</span><h3 data-en="Compete locally. Rise together." data-bn="স্থানীয়ভাবে প্রতিযোগিতা করুন। একসঙ্গে এগিয়ে যান।">Compete locally. Rise together.</h3><p data-en="Each constituency contributes participants to a zonal team. Individual farm progress builds the team's combined result." data-bn="প্রতিটি বিধানসভা কেন্দ্র একটি জোনাল দলে অংশগ্রহণকারী যোগ করে। ব্যক্তিগত খামারের অগ্রগতি দলের সম্মিলিত ফল তৈরি করে।">Each constituency contributes participants to a zonal team. Individual farm progress builds the team's combined result.</p></div>
+            </article>
+            <article class="role-panel" id="role-global" role="tabpanel" aria-labelledby="tab-global" hidden>
+              <div class="role-symbol bengali-symbol" aria-hidden="true">ভি</div>
+              <div><span data-en="Reconnect with bhite mati" data-bn="ভিটেমাটির সঙ্গে নতুন সংযোগ">Reconnect with bhite mati</span><h3 data-en="Back a new generation at home" data-bn="নিজের মাটির নতুন প্রজন্মের পাশে দাঁড়ান">Back a new generation at home</h3><p data-en="The proposed sponsorship model connects Bengalis around the world with selected agricultural youth in their ancestral areas." data-bn="প্রস্তাবিত সহযোগিতা মডেল বিশ্বজুড়ে বাঙালিদের তাঁদের পূর্বপুরুষের এলাকার নির্বাচিত কৃষি-উদ্যোগী যুবদের সঙ্গে যুক্ত করে।">The proposed sponsorship model connects Bengalis around the world with selected agricultural youth in their ancestral areas.</p></div>
+            </article>
           </div>
         </div>
       </section>
@@ -98,7 +142,7 @@
           <div class="support-intro">
             <p class="section-kicker" data-en="What participants gain" data-bn="অংশগ্রহণকারীদের প্রাপ্তি">What participants gain</p>
             <h2 data-en="Support for the whole farming journey" data-bn="সমগ্র কৃষিযাত্রায় সহায়তা">Support for the whole farming journey</h2>
-            <p data-en="The initiative is designed to pair individual responsibility with practical support—from field decisions to selling beyond the local market." data-bn="এই উদ্যোগে ব্যক্তিগত দায়িত্বের সঙ্গে বাস্তব সহায়তা যুক্ত করার পরিকল্পনা রয়েছে—জমির সিদ্ধান্ত থেকে স্থানীয় বাজারের বাইরে বিক্রি পর্যন্ত।">The initiative is designed to pair individual responsibility with practical support—from field decisions to selling beyond the local market.</p>
+            <p data-en="The initiative is designed to pair individual responsibility with practical support, from field decisions to selling beyond the local market." data-bn="এই উদ্যোগে ব্যক্তিগত দায়িত্বের সঙ্গে বাস্তব সহায়তা যুক্ত করার পরিকল্পনা রয়েছে। জমির সিদ্ধান্ত থেকে স্থানীয় বাজারের বাইরে বিক্রি পর্যন্ত।">The initiative is designed to pair individual responsibility with practical support, from field decisions to selling beyond the local market.</p>
           </div>
           <div class="support-list">
             <article><span aria-hidden="true">01</span><div><h3 data-en="Modern farm training" data-bn="আধুনিক কৃষি প্রশিক্ষণ">Modern farm training</h3><p data-en="Guidance for smart, integrated and technology-enabled agriculture." data-bn="স্মার্ট, সমন্বিত ও প্রযুক্তিনির্ভর কৃষির জন্য নির্দেশনা।">Guidance for smart, integrated and technology-enabled agriculture.</p></div></article>
@@ -115,10 +159,10 @@
             <p data-en="The interview outlines the following proposed grants and prizes. Final amounts, eligibility and disbursement terms should be confirmed in the official rules before anyone applies or contributes." data-bn="সাক্ষাৎকারে নিম্নলিখিত প্রস্তাবিত অনুদান ও পুরস্কারের কথা বলা হয়েছে। আবেদন বা অর্থসহায়তার আগে সরকারি নিয়মে চূড়ান্ত অঙ্ক, যোগ্যতা ও বিতরণের শর্ত নিশ্চিত করতে হবে।">The interview outlines the following proposed grants and prizes. Final amounts, eligibility and disbursement terms should be confirmed in the official rules before anyone applies or contributes.</p>
           </div>
           <div class="award-cards">
-            <article class="award-feature"><small data-en="Selected participant grant" data-bn="নির্বাচিত অংশগ্রহণকারীর অনুদান">Selected participant grant</small><strong>₹1 lakh</strong><p data-en="Proposed for each of approximately 5,000 selected farmers to help develop their farm over one year." data-bn="প্রায় ৫,০০০ নির্বাচিত কৃষকের প্রত্যেককে এক বছরে খামার উন্নয়নের জন্য প্রস্তাবিত অনুদান।">Proposed for each of approximately 5,000 selected farmers to help develop their farm over one year.</p></article>
-            <article><small data-en="Individual champion" data-bn="ব্যক্তিগত চ্যাম্পিয়ন">Individual champion</small><strong>₹1 crore</strong><p data-en="Announced prize for the highest-performing individual farmer." data-bn="সর্বোচ্চ ফল করা ব্যক্তিগত কৃষকের জন্য ঘোষিত পুরস্কার।">Announced prize for the highest-performing individual farmer.</p></article>
-            <article><small data-en="Winning team" data-bn="বিজয়ী দল">Winning team</small><strong>₹1 crore</strong><p data-en="Announced team prize based on the zone’s combined farm scores." data-bn="জোনের সম্মিলিত ফার্ম স্কোরের ভিত্তিতে ঘোষিত দলীয় পুরস্কার।">Announced team prize based on the zone’s combined farm scores.</p></article>
-            <article><small data-en="Additional categories" data-bn="অতিরিক্ত বিভাগ">Additional categories</small><strong>₹1 crore</strong><p data-en="Announced combined fund for other categories and recognitions." data-bn="অন্যান্য বিভাগ ও স্বীকৃতির জন্য ঘোষিত সম্মিলিত তহবিল।">Announced combined fund for other categories and recognitions.</p></article>
+            <article class="award-feature" data-tilt><small data-en="Selected participant grant" data-bn="নির্বাচিত অংশগ্রহণকারীর অনুদান">Selected participant grant</small><strong>₹1 lakh</strong><p data-en="Proposed for each of approximately 5,000 selected farmers to help develop their farm over one year." data-bn="প্রায় ৫,০০০ নির্বাচিত কৃষকের প্রত্যেককে এক বছরে খামার উন্নয়নের জন্য প্রস্তাবিত অনুদান।">Proposed for each of approximately 5,000 selected farmers to help develop their farm over one year.</p></article>
+            <article data-tilt><small data-en="Individual champion" data-bn="ব্যক্তিগত চ্যাম্পিয়ন">Individual champion</small><strong>₹1 crore</strong><p data-en="Announced prize for the highest-performing individual farmer." data-bn="সর্বোচ্চ ফল করা ব্যক্তিগত কৃষকের জন্য ঘোষিত পুরস্কার।">Announced prize for the highest-performing individual farmer.</p></article>
+            <article data-tilt><small data-en="Winning team" data-bn="বিজয়ী দল">Winning team</small><strong>₹1 crore</strong><p data-en="Announced team prize based on the zone’s combined farm scores." data-bn="জোনের সম্মিলিত ফার্ম স্কোরের ভিত্তিতে ঘোষিত দলীয় পুরস্কার।">Announced team prize based on the zone’s combined farm scores.</p></article>
+            <article data-tilt><small data-en="Additional categories" data-bn="অতিরিক্ত বিভাগ">Additional categories</small><strong>₹1 crore</strong><p data-en="Announced combined fund for other categories and recognitions." data-bn="অন্যান্য বিভাগ ও স্বীকৃতির জন্য ঘোষিত সম্মিলিত তহবিল।">Announced combined fund for other categories and recognitions.</p></article>
           </div>
         </div>
       </section>
@@ -132,7 +176,7 @@
           <div>
             <p class="section-kicker" data-en="Global Bengali connection" data-bn="বিশ্ববাঙালির সংযোগ">Global Bengali connection</p>
             <h2 data-en="From ancestral soil to a farmer’s next chapter" data-bn="ভিটেমাটি থেকে এক কৃষকের নতুন অধ্যায়">From ancestral soil to a farmer’s next chapter</h2>
-            <p data-en="KRL proposes a distinctive sponsorship model: prosperous Bengalis living around the world support selected agricultural youth connected to their ancestral constituency. The contribution is framed not as charity, but as a bridge back to bhite mati—the soil of one’s roots." data-bn="KRL-এর প্রস্তাবিত বিশেষ সহযোগিতা মডেলে বিশ্বজুড়ে প্রতিষ্ঠিত বাঙালিরা তাঁদের পূর্বপুরুষের এলাকার নির্বাচিত কৃষি-উদ্যোগী যুবদের পাশে দাঁড়াবেন। এটি কেবল দান নয়—নিজের ভিটেমাটির সঙ্গে নতুন করে সেতুবন্ধন।">KRL proposes a distinctive sponsorship model: prosperous Bengalis living around the world support selected agricultural youth connected to their ancestral constituency. The contribution is framed not as charity, but as a bridge back to <em>bhite mati</em>—the soil of one’s roots.</p>
+            <p data-en="KRL proposes a distinctive sponsorship model: prosperous Bengalis living around the world support selected agricultural youth connected to their ancestral constituency. The contribution is framed not as charity, but as a bridge back to bhite mati, the soil of one’s roots." data-bn="KRL-এর প্রস্তাবিত বিশেষ সহযোগিতা মডেলে বিশ্বজুড়ে প্রতিষ্ঠিত বাঙালিরা তাঁদের পূর্বপুরুষের এলাকার নির্বাচিত কৃষি-উদ্যোগী যুবদের পাশে দাঁড়াবেন। এটি কেবল দান নয়। নিজের ভিটেমাটির সঙ্গে নতুন করে সেতুবন্ধন।">KRL proposes a distinctive sponsorship model: prosperous Bengalis living around the world support selected agricultural youth connected to their ancestral constituency. The contribution is framed not as charity, but as a bridge back to <em>bhite mati</em>, the soil of one’s roots.</p>
             <a class="text-link" href="#readiness" data-en="See sponsorship readiness →" data-bn="সহযোগিতার প্রস্তুতি দেখুন →">See sponsorship readiness →</a>
           </div>
         </div>
@@ -174,7 +218,6 @@
     <footer>
       <div class="wrap footer-grid">
         <div class="brand footer-brand"><span class="brand-mark" aria-hidden="true">কৃ</span><span><strong>Krishi Ratna League</strong><small>Bengal</small></span></div>
-        <p data-en="A concept website based solely on the supplied interview transcript. Official programme details must be verified by the organisers." data-bn="সরবরাহকৃত সাক্ষাৎকারের প্রতিলিপির ভিত্তিতে তৈরি একটি ধারণাভিত্তিক ওয়েবসাইট। সরকারি কর্মসূচির তথ্য আয়োজকদের মাধ্যমে যাচাই করতে হবে।">A concept website based solely on the supplied interview transcript. Official programme details must be verified by the organisers.</p>
         <a href="#top" data-en="Back to top ↑" data-bn="উপরে ফিরুন ↑">Back to top ↑</a>
       </div>
     </footer>
