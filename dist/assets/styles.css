@@ -11,8 +11,8 @@
   --muted: #5c6a62;
   --line: rgba(18, 60, 43, 0.18);
   --wrap: min(1180px, calc(100% - 40px));
-  --serif: Georgia, "Times New Roman", "Noto Serif Bengali", serif;
-  --sans: Inter, "Noto Sans Bengali", "Segoe UI", sans-serif;
+  --serif: "Montserrat", "Noto Sans Bengali", "Segoe UI", sans-serif;
+  --sans: "Montserrat", "Noto Sans Bengali", "Segoe UI", sans-serif;
 }
 
 * { box-sizing: border-box; }
