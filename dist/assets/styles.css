@@ -79,6 +79,13 @@ h1 { max-width: 810px; margin: 0; font-size: clamp(3.35rem, 7vw, 6.7rem); line-h
 .numbers strong { font: 500 clamp(1.7rem, 3.4vw, 2.75rem)/1 var(--serif); }
 .numbers span { margin-top: .55rem; font-size: .82rem; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; }
 
+.organizer-strip { padding: 2.1rem 0; background: white; border-bottom: 1px solid var(--line); }
+.organizer-strip-inner { display: flex; align-items: center; justify-content: space-between; gap: 3rem; }
+.organizer-strip-inner > div { display: grid; gap: .35rem; }
+.organizer-strip-inner span { color: var(--red); font-size: .72rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
+.organizer-strip-inner strong { max-width: 450px; font-size: 1rem; line-height: 1.35; }
+.organizer-strip img { width: min(420px, 42vw); height: auto; mix-blend-mode: multiply; }
+
 .section { padding: 110px 0; }
 .section h2 { margin: 0; font-size: clamp(2.4rem, 4.9vw, 4.7rem); line-height: 1.02; text-wrap: balance; }
 .manifesto { position: relative; overflow: hidden; }
@@ -181,6 +188,48 @@ blockquote cite { display: block; margin-top: .8rem; color: var(--muted); font-s
 .role-panel h3 { max-width: 720px; margin: .8rem 0 1rem; font: 500 clamp(2.4rem, 5.6vw, 5rem)/1 var(--serif); letter-spacing: -.045em; }
 .role-panel p { max-width: 620px; margin: 0; color: rgba(255,255,255,.66); font-size: 1.05rem; }
 
+.teams-section { overflow: hidden; background: #f3efe2; }
+.teams-heading { display: grid; grid-template-columns: 1.15fr .85fr; gap: 5rem; align-items: end; }
+.teams-heading > p { margin: 0; color: var(--muted); font-size: 1.08rem; }
+.team-explorer { margin-top: 4rem; }
+.team-feature { position: relative; display: grid; grid-template-columns: minmax(310px,.8fr) minmax(0,1.2fr); min-height: 570px; overflow: hidden; background: var(--forest-deep); color: white; }
+.team-feature::after { content: "KRL"; position: absolute; right: -2rem; bottom: -4rem; color: rgba(255,255,255,.025); font: 800 clamp(9rem,20vw,18rem)/1 var(--sans); letter-spacing: -.1em; pointer-events: none; }
+.team-feature-art { position: relative; display: grid; place-items: center; overflow: hidden; background: var(--lime); }
+.team-feature-art::before { content: ""; position: absolute; inset: 8%; border: 1px solid rgba(8,38,27,.18); border-radius: 50%; }
+.team-orbit { position: absolute; width: 78%; aspect-ratio: 1; border: 1px dashed rgba(8,38,27,.3); border-radius: 50%; animation: orbit 22s linear infinite; }
+.team-orbit::before, .team-orbit::after { content: ""; position: absolute; width: .7rem; height: .7rem; border-radius: 50%; background: var(--red); }
+.team-orbit::before { top: 8%; left: 16%; }
+.team-orbit::after { right: 3%; bottom: 30%; background: var(--forest); }
+.team-feature-art img { position: relative; z-index: 2; width: min(75%,340px); aspect-ratio: 4/5; object-fit: cover; mix-blend-mode: multiply; filter: saturate(1.08) contrast(1.02); transition: opacity .22s ease, transform .45s cubic-bezier(.2,.8,.2,1); }
+.team-feature.is-changing .team-feature-art img { opacity: 0; transform: scale(.9) rotate(-3deg); }
+.team-feature-copy { position: relative; z-index: 2; display: flex; flex-direction: column; justify-content: center; padding: clamp(2.2rem,6vw,6rem); }
+.team-count { color: var(--lime); font-size: .85rem; font-weight: 800; letter-spacing: .12em; }
+.team-count b { font-size: 1.4rem; }
+.team-region { margin: 3.4rem 0 .7rem; color: rgba(255,255,255,.52); font-size: .74rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; }
+.team-feature h3 { max-width: 720px; margin: 0; font-size: clamp(3rem,7vw,6.8rem); line-height: .88; letter-spacing: -.065em; text-wrap: balance; transition: opacity .22s ease, transform .35s ease; }
+.team-chant { max-width: 650px; margin: 2rem 0 0; color: var(--lime); font-family: "Noto Sans Bengali", sans-serif; font-size: clamp(1.25rem,2.2vw,1.75rem); line-height: 1.45; transition: opacity .22s ease, transform .35s ease; }
+.team-feature.is-changing h3, .team-feature.is-changing .team-chant { opacity: 0; transform: translateY(12px); }
+.team-controls { display: flex; gap: .7rem; margin-top: 3rem; }
+.team-arrow { display: grid; place-items: center; width: 3.2rem; height: 3.2rem; border: 1px solid rgba(255,255,255,.28); border-radius: 50%; background: transparent; color: white; cursor: pointer; font-size: 1.2rem; transition: background .25s ease, color .25s ease, transform .25s ease; }
+.team-arrow:hover, .team-arrow:focus-visible { background: var(--lime); color: var(--forest-deep); transform: scale(1.06); }
+.team-rail { display: grid; grid-template-columns: repeat(15,minmax(118px,1fr)); gap: .55rem; overflow-x: auto; padding: .8rem 0 1.2rem; scrollbar-color: var(--gold) transparent; scroll-snap-type: x proximity; }
+.team-chip { min-width: 118px; padding: .7rem; border: 1px solid var(--line); background: rgba(255,255,255,.5); color: var(--ink); cursor: pointer; scroll-snap-align: start; transition: transform .25s ease, border-color .25s ease, background .25s ease; }
+.team-chip:hover { transform: translateY(-4px); border-color: var(--gold); }
+.team-chip.is-active { background: var(--gold); border-color: var(--gold); }
+.team-chip img { width: 100%; aspect-ratio: 4/5; object-fit: cover; mix-blend-mode: multiply; }
+.team-chip span { display: block; min-height: 2.7rem; margin-top: .55rem; font-size: .72rem; font-weight: 800; line-height: 1.25; }
+
+.anthem-card { display: grid; grid-template-columns: auto minmax(220px,.8fr) minmax(240px,1.2fr); gap: 1.25rem; align-items: center; margin-top: 2.8rem; padding: 1.25rem 1.4rem; border: 1px solid var(--line); background: white; box-shadow: 0 16px 45px rgba(18,60,43,.08); }
+.anthem-toggle { display: grid; place-items: center; width: 4.1rem; height: 4.1rem; border: 0; border-radius: 50%; background: var(--red); color: white; cursor: pointer; font-size: 1rem; transition: transform .25s ease, background .25s ease; }
+.anthem-toggle:hover, .anthem-toggle:focus-visible { transform: scale(1.06); background: var(--forest); }
+.anthem-copy { display: grid; }
+.anthem-copy > span { color: var(--red); font-size: .7rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
+.anthem-copy strong { margin-top: .18rem; font: 700 1.45rem/1.25 "Noto Sans Bengali", sans-serif; }
+.anthem-copy small { margin-top: .2rem; color: var(--muted); }
+.anthem-progress-wrap { display: grid; grid-template-columns: 1fr auto; gap: .85rem; align-items: center; }
+.anthem-progress { width: 100%; accent-color: var(--red); cursor: pointer; }
+.anthem-time { min-width: 6.8rem; color: var(--muted); font-size: .76rem; font-variant-numeric: tabular-nums; }
+
 .reveal-ready { opacity: 0; transform: translateY(34px); transition: opacity .8s ease, transform .8s cubic-bezier(.2,.8,.2,1); }
 .reveal-ready.is-visible { opacity: 1; transform: none; }
 .stagger-ready > * { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
@@ -229,6 +278,12 @@ footer { padding: 45px 0; background: #061b13; color: rgba(255,255,255,.68); }
   .footer-grid { grid-template-columns: 1fr; gap: 1.4rem; }
   .role-panel { text-align: center; }
   .role-panel p { margin-inline: auto; }
+  .teams-heading, .team-feature { grid-template-columns: 1fr; gap: 2.5rem; }
+  .team-feature-art { min-height: 460px; }
+  .team-feature-copy { padding-top: 1rem; }
+  .team-region { margin-top: 1rem; }
+  .anthem-card { grid-template-columns: auto 1fr; }
+  .anthem-progress-wrap { grid-column: 1 / -1; }
 }
 
 @media (max-width: 560px) {
@@ -264,4 +319,17 @@ footer { padding: 45px 0; background: #061b13; color: rgba(255,255,255,.68); }
   .role-tab:last-child { border-bottom: 0; }
   .role-panel { min-height: 520px; padding: 2rem 1.2rem; }
   .role-symbol { width: 150px; }
+  .organizer-strip-inner { align-items: flex-start; flex-direction: column; gap: 1.3rem; }
+  .organizer-strip img { width: 100%; }
+  .teams-heading { gap: 1.4rem; }
+  .team-explorer { margin-top: 2.5rem; }
+  .team-feature { min-height: 0; }
+  .team-feature-art { min-height: 360px; }
+  .team-feature-art img { width: min(70%,260px); }
+  .team-feature-copy { padding: 2rem 1.25rem 2.5rem; }
+  .team-feature h3 { font-size: clamp(2.8rem,14vw,4.4rem); }
+  .team-rail { grid-template-columns: repeat(15,105px); }
+  .team-chip { min-width: 105px; }
+  .anthem-card { grid-template-columns: auto 1fr; padding: 1rem; }
+  .anthem-toggle { width: 3.5rem; height: 3.5rem; }
 }

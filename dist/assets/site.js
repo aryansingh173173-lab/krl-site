@@ -32,6 +32,10 @@ function setLanguage(nextLanguage) {
   toggle.setAttribute('aria-pressed', String(language === 'bn'));
   toggle.setAttribute('aria-label', language === 'en' ? 'বাংলায় দেখুন' : 'View in English');
   updateVideoToggle();
+  teamPrev.setAttribute('aria-label', language === 'bn' ? 'আগের দল' : 'Previous team');
+  teamNext.setAttribute('aria-label', language === 'bn' ? 'পরের দল' : 'Next team');
+  teamImage.alt = language === 'bn' ? `${teams[activeTeam].name} দলের ব্যাজ` : `${teams[activeTeam].name} badge`;
+  updateAnthemState();
 }
 
 toggle.addEventListener('click', () => setLanguage(language === 'en' ? 'bn' : 'en'));
@@ -93,6 +97,112 @@ roleTabs.forEach((tab, index) => {
     next.focus();
   });
 });
+
+const teams = [
+  { name: 'Himalayan Giants', slug: 'himalayan-giants', chant: 'পাহাড় ভালোবাসি, ফসল ফলাবো রাশি রাশি' },
+  { name: 'Terai Tigers', slug: 'terai-tigers', chant: 'বাঘের মতো লড়াই করব, ফসলে আজ ঘর ভরব' },
+  { name: 'Cooch Behar Royals', slug: 'cooch-behar-royals', chant: 'রাজার জেলার চাষী আমরা, জিততে ভালোবাসি' },
+  { name: 'Dinajpur Defenders', slug: 'dinajpur-defenders', chant: 'দিনাজপুর এগিয়ে থাকে, দেখি কে হারায় কাকে' },
+  { name: 'Malda Kings', slug: 'malda-kings', chant: 'ফলের রাজা আমের দেশে, মালদাই জয়ী হবে শেষে' },
+  { name: 'Murshidabad Nawabs', slug: 'murshidabad-nawabs', chant: 'নবাবের মাটি নবাবের দেশ, নবাবেরই মতো জেতা অভ্যেস' },
+  { name: 'Nadia Warriors', slug: 'nadia-warriors', chant: 'নদীয়ার মাটি হবে নাকো ব্যর্থ, আমরাই জিতব, এটাই সত্য' },
+  { name: 'Bardhaman Super Kings', slug: 'bardhaman-super-kings', chant: 'আমরা চাষী বর্ধমানের, দৌড়াবো আজ সমুখপানে' },
+  { name: 'Hooghly Harvesters', slug: 'hooghly-harvesters', chant: 'হুগলির হাসি হুগলির মজা, আমরাই হবো যুদ্ধের রাজা' },
+  { name: 'Birbhum Blasters', slug: 'birbhum-blasters', chant: 'লাল মাটির দাপটে, ফলবে ফসল মাঠে মাঠে' },
+  { name: 'Bankura Bulls', slug: 'bankura-bulls', chant: 'শক্ত মাটি কম জল, তবুও ফলাই জেতার ফসল' },
+  { name: 'Purulia Panthers', slug: 'purulia-panthers', chant: 'পুরুলিয়াকে রুক্ষ ভাবো? দেখো সবাইকে হারিয়ে দেবো' },
+  { name: 'Medinipur Mavericks', slug: 'medinipur-mavericks', chant: 'মাটির জেলা মেদিনীপুরে, ফলাব ফসল গোলা ভরে' },
+  { name: 'Ganga Gladiators', slug: 'ganga-gladiators', chant: 'গঙ্গা দিয়ে বইছে জল, আনন্দে আজ ফলাই ফসল' },
+  { name: 'Sundarban Strikers', slug: 'sundarban-strikers', chant: 'বনবিবির শপথ নিয়ে, বলছি যাবো ট্রফি নিয়ে' }
+];
+
+const teamFeature = document.querySelector('.team-feature');
+const teamImage = document.querySelector('#team-feature-image');
+const teamName = document.querySelector('#team-feature-name');
+const teamChant = document.querySelector('#team-feature-chant');
+const teamCurrent = document.querySelector('#team-current');
+const teamChips = [...document.querySelectorAll('.team-chip')];
+const teamPrev = document.querySelector('.team-prev');
+const teamNext = document.querySelector('.team-next');
+let activeTeam = 0;
+let teamChangeTimer;
+
+function showTeam(index) {
+  const nextIndex = (index + teams.length) % teams.length;
+  if (nextIndex === activeTeam && teamName.textContent === teams[nextIndex].name) return;
+  activeTeam = nextIndex;
+  clearTimeout(teamChangeTimer);
+  teamFeature.classList.add('is-changing');
+  teamChangeTimer = setTimeout(() => {
+    const team = teams[activeTeam];
+    teamImage.src = `assets/teams/${team.slug}.jpg`;
+    teamImage.alt = `${team.name} badge`;
+    teamName.textContent = team.name;
+    teamChant.textContent = `“${team.chant}”`;
+    teamCurrent.textContent = String(activeTeam + 1).padStart(2, '0');
+    teamChips.forEach((chip, chipIndex) => {
+      const selected = chipIndex === activeTeam;
+      chip.classList.toggle('is-active', selected);
+      chip.setAttribute('aria-pressed', String(selected));
+      if (selected) chip.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'nearest', inline: 'center' });
+    });
+    teamFeature.classList.remove('is-changing');
+  }, reduceMotion ? 0 : 180);
+}
+
+teamChips.forEach((chip) => chip.addEventListener('click', () => showTeam(Number(chip.dataset.teamIndex))));
+teamPrev.addEventListener('click', () => showTeam(activeTeam - 1));
+teamNext.addEventListener('click', () => showTeam(activeTeam + 1));
+document.querySelector('.team-explorer').addEventListener('keydown', (event) => {
+  if (!['ArrowLeft', 'ArrowRight'].includes(event.key)) return;
+  if (event.target.matches('input, audio')) return;
+  event.preventDefault();
+  showTeam(activeTeam + (event.key === 'ArrowRight' ? 1 : -1));
+});
+
+const anthemAudio = document.querySelector('.anthem-audio');
+const anthemToggle = document.querySelector('.anthem-toggle');
+const anthemIcon = document.querySelector('.anthem-icon');
+const anthemProgress = document.querySelector('.anthem-progress');
+const anthemTime = document.querySelector('.anthem-time');
+
+function formatTime(seconds) {
+  if (!Number.isFinite(seconds)) return '0:00';
+  const minutes = Math.floor(seconds / 60);
+  return `${minutes}:${String(Math.floor(seconds % 60)).padStart(2, '0')}`;
+}
+
+function updateAnthemState() {
+  const playing = !anthemAudio.paused;
+  anthemToggle.setAttribute('aria-pressed', String(playing));
+  anthemToggle.setAttribute('aria-label', language === 'bn'
+    ? (playing ? 'লীগের সংগীত থামান' : 'লীগের সংগীত চালান')
+    : (playing ? 'Pause league anthem' : 'Play league anthem'));
+  anthemIcon.textContent = playing ? 'Ⅱ' : '▶';
+  const duration = Number.isFinite(anthemAudio.duration) ? anthemAudio.duration : 196;
+  anthemProgress.max = String(Math.round(duration));
+  anthemProgress.value = String(Math.round(anthemAudio.currentTime));
+  anthemTime.textContent = `${formatTime(anthemAudio.currentTime)} / ${formatTime(duration)}`;
+}
+
+anthemToggle.addEventListener('click', async () => {
+  if (anthemAudio.paused) {
+    try { await anthemAudio.play(); } catch (_) { /* Playback may require another direct gesture. */ }
+  } else {
+    anthemAudio.pause();
+  }
+  updateAnthemState();
+});
+anthemAudio.addEventListener('play', updateAnthemState);
+anthemAudio.addEventListener('pause', updateAnthemState);
+anthemAudio.addEventListener('timeupdate', updateAnthemState);
+anthemAudio.addEventListener('durationchange', updateAnthemState);
+anthemAudio.addEventListener('ended', updateAnthemState);
+anthemProgress.addEventListener('input', () => {
+  anthemAudio.currentTime = Number(anthemProgress.value);
+  updateAnthemState();
+});
+updateAnthemState();
 
 const revealTargets = [...document.querySelectorAll('.section')];
 const staggerTargets = [...document.querySelectorAll('.numbers-grid, .journey-grid, .award-cards, .support-list')];
