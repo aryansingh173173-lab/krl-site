@@ -333,3 +333,4 @@ footer { padding: 45px 0; background: #061b13; color: rgba(255,255,255,.68); }
   .anthem-card { grid-template-columns: auto 1fr; padding: 1rem; }
   .anthem-toggle { width: 3.5rem; height: 3.5rem; }
 }
+
