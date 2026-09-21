@@ -27,13 +27,10 @@ button, a { -webkit-tap-highlight-color: transparent; }
 
 .site-header { position: fixed; inset: 0 0 auto; z-index: 20; color: white; border-bottom: 1px solid rgba(255,255,255,.18); transition: background .35s ease, transform .35s ease, border-color .35s ease; }
 .site-header.is-scrolled { background: rgba(6,27,19,.88); border-color: rgba(255,255,255,.1); backdrop-filter: blur(16px); }
-.nav-shell { width: var(--wrap); height: 86px; margin: auto; display: flex; align-items: center; justify-content: space-between; gap: 2rem; }
-.brand { display: inline-flex; align-items: center; gap: .75rem; text-decoration: none; }
-.brand-mark { display: grid; place-items: center; width: 2.8rem; height: 2.8rem; border: 1px solid currentColor; border-radius: 50% 50% 46% 50%; font: 700 1.15rem/1 var(--serif); transform: rotate(-6deg); }
-.brand > span:last-child { display: grid; line-height: 1.1; }
-.brand strong { font-size: .95rem; letter-spacing: .035em; text-transform: uppercase; }
-.brand small { margin-top: .25rem; font-size: .76rem; opacity: .72; letter-spacing: .12em; text-transform: uppercase; }
-.desktop-nav { display: flex; align-items: center; gap: 2rem; margin-left: auto; }
+.nav-shell { width: var(--wrap); height: 100px; margin: auto; display: flex; align-items: center; justify-content: space-between; gap: 1.2rem; }
+.brand { display: inline-flex; flex: none; align-items: center; text-decoration: none; }
+.site-logo { display: block; width: 240px; height: auto; padding: 4px; background: white; border-radius: 4px; }
+.desktop-nav { display: flex; align-items: center; gap: 1.25rem; margin-left: auto; }
 .desktop-nav a { text-decoration: none; font-size: .9rem; font-weight: 600; opacity: .84; }
 .desktop-nav a:hover, .desktop-nav a:focus-visible { opacity: 1; }
 .language-toggle { display: inline-flex; align-items: center; gap: .55rem; border: 1px solid rgba(255,255,255,.42); background: rgba(0,0,0,.12); color: white; padding: .58rem .85rem; border-radius: 999px; font: 600 .9rem/1 var(--sans); cursor: pointer; backdrop-filter: blur(10px); }
@@ -402,7 +399,7 @@ blockquote cite { display: block; margin-top: .8rem; color: var(--muted); font-s
 
 footer { padding: 45px 0; background: #061b13; color: rgba(255,255,255,.68); }
 .footer-grid { display: grid; grid-template-columns: 1fr auto; gap: 3rem; align-items: center; }
-.footer-brand { color: white; }
+.footer-brand .site-logo { width: min(300px, 100%); }
 .footer-grid p { margin: 0; font-size: .82rem; }
 .footer-grid > a { color: white; font-weight: 750; font-size: .86rem; }
 
@@ -458,9 +455,8 @@ footer { padding: 45px 0; background: #061b13; color: rgba(255,255,255,.68); }
 }
 
 @media (max-width: 560px) {
-  .nav-shell { height: 74px; }
-  .brand strong { font-size: .78rem; }
-  .brand-mark { width: 2.4rem; height: 2.4rem; }
+  .nav-shell { height: 84px; }
+  .site-logo { width: min(190px, 52vw); padding: 3px; }
   .language-toggle { padding: .55rem .7rem; }
   .hero { min-height: 720px; }
   .hero-video { object-position: center; }
