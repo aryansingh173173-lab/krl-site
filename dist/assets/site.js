@@ -74,6 +74,35 @@ if (!reduceMotion && window.matchMedia('(hover:hover) and (pointer:fine)').match
 const roleTabs = [...document.querySelectorAll('.role-tab')];
 const rolePanels = [...document.querySelectorAll('.role-panel')];
 
+const modelTabs = [...document.querySelectorAll('.model-tab')];
+const modelPanels = [...document.querySelectorAll('.model-panel')];
+
+function activateModel(model) {
+  modelTabs.forEach((tab) => {
+    const active = tab.dataset.model === model;
+    tab.classList.toggle('is-active', active);
+    tab.setAttribute('aria-selected', String(active));
+    tab.tabIndex = active ? 0 : -1;
+  });
+  modelPanels.forEach((panel) => {
+    const active = panel.id === `model-${model}`;
+    panel.hidden = !active;
+    panel.classList.toggle('is-active', active);
+  });
+}
+
+modelTabs.forEach((tab, index) => {
+  tab.addEventListener('click', () => activateModel(tab.dataset.model));
+  tab.addEventListener('keydown', (event) => {
+    if (!['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(event.key)) return;
+    event.preventDefault();
+    const direction = ['ArrowRight', 'ArrowDown'].includes(event.key) ? 1 : -1;
+    const next = modelTabs[(index + direction + modelTabs.length) % modelTabs.length];
+    activateModel(next.dataset.model);
+    next.focus();
+  });
+});
+
 function activateRole(role) {
   roleTabs.forEach((tab) => {
     const active = tab.dataset.role === role;
