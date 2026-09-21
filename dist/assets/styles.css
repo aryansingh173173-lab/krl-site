@@ -244,6 +244,39 @@ blockquote cite { display: block; margin-top: .8rem; color: var(--muted); font-s
 .roadmap-grid h3 { margin: 2.2rem 0 .7rem; font-size: 1.2rem; }
 .roadmap-grid p { margin: 0; color: var(--muted); font-size: .9rem; }
 
+.sponsor-journey { background: #f5f0e3; }
+.sponsor-journey-heading { display: grid; grid-template-columns: 1fr .7fr; gap: 4rem; align-items: end; }
+.sponsor-journey-heading h2 { max-width: 760px; }
+.sponsor-journey-heading > p { color: var(--muted); }
+.sponsor-journey-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: .8rem; margin-top: 3rem; }
+.sponsor-journey-grid article { min-height: 270px; padding: 1.5rem; border: 1px solid var(--line); background: white; transition: transform .25s ease, box-shadow .25s ease; }
+.sponsor-journey-grid article:hover { transform: translateY(-6px); box-shadow: 0 15px 35px rgba(8,38,27,.08); }
+.sponsor-journey-grid span { display: grid; place-items: center; width: 2.2rem; height: 2.2rem; border-radius: 50%; background: var(--forest); color: white; font-size: .72rem; font-weight: 800; }
+.sponsor-journey-grid h3 { margin: 2rem 0 .6rem; font-size: 1.1rem; }
+.sponsor-journey-grid p { margin: 0; color: var(--muted); font-size: .9rem; }
+
+.league-mechanics { background: #113724; color: white; }
+.league-mechanics-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: clamp(3rem,7vw,7rem); align-items: center; }
+.league-mechanics h2 { max-width: 700px; }
+.league-mechanics-grid > div:first-child > p:last-child { max-width: 700px; color: rgba(255,255,255,.7); }
+.league-funnel { display: grid; grid-template-columns: repeat(2,1fr); gap: .75rem; }
+.league-funnel > div { display: flex; flex-direction: column; justify-content: space-between; min-height: 170px; padding: 1.3rem; border: 1px solid rgba(217,235,132,.3); background: rgba(255,255,255,.04); }
+.league-funnel > div:first-child { grid-column: 1/-1; background: var(--lime); color: var(--forest-deep); }
+.league-funnel strong { font-size: clamp(2rem,4vw,3.5rem); line-height: 1; }
+.league-funnel span { font-size: .82rem; font-weight: 700; }
+.league-funnel > p { grid-column: 1/-1; margin: .2rem 0 0; color: rgba(255,255,255,.58); font-size: .8rem; }
+
+.living-farms { background: #e4e9d8; }
+.living-farms-heading { display: grid; grid-template-columns: .45fr 1.1fr .85fr; gap: 2rem; align-items: end; }
+.living-farms-heading h2 { margin-bottom: 0; }
+.living-farms-heading > p:last-child { margin: 0; color: var(--muted); }
+.living-farms-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; margin-top: 3.5rem; background: var(--line); }
+.living-farms-grid article { min-height: 300px; padding: 2rem; background: #f8f5ea; transition: background .3s ease; }
+.living-farms-grid article:hover { background: var(--lime); }
+.living-farms-grid span { color: var(--red); font-size: .72rem; font-weight: 800; letter-spacing: .14em; }
+.living-farms-grid h3 { margin: 3rem 0 .8rem; font: 500 clamp(1.8rem,2.5vw,2.7rem)/1.12 var(--serif); letter-spacing: -.04em; }
+.living-farms-grid p { margin: 0; color: var(--muted); font-size: .92rem; }
+
 .role-section { position: relative; overflow: hidden; background: var(--forest-deep); color: white; }
 .role-section::before { content: ""; position: absolute; width: 620px; height: 620px; right: -250px; top: -280px; border-radius: 50%; border: 1px solid rgba(217,235,132,.18); box-shadow: 0 0 0 80px rgba(217,235,132,.025), 0 0 0 160px rgba(217,235,132,.018); }
 .role-shell { position: relative; z-index: 1; }
@@ -397,7 +430,10 @@ footer { padding: 45px 0; background: #061b13; color: rgba(255,255,255,.68); }
   .numbers-grid { grid-template-columns: 1fr 1fr; }
   .numbers article:nth-child(2) { border-right: 0; }
   .numbers article:nth-child(-n+2) { border-bottom: 1px solid rgba(18,60,43,.2); }
-  .manifesto-grid, .section-heading, .support-layout, .awards-heading, .sponsor-layout, .proof-grid, .readiness-layout, .role-heading, .role-panel, .roots-spotlight-grid, .applicant-heading, .faq-layout, .model-heading, .score-layout { grid-template-columns: 1fr; gap: 2.5rem; }
+  .manifesto-grid, .section-heading, .support-layout, .awards-heading, .sponsor-layout, .proof-grid, .readiness-layout, .role-heading, .role-panel, .roots-spotlight-grid, .applicant-heading, .faq-layout, .model-heading, .score-layout, .sponsor-journey-heading, .league-mechanics-grid, .living-farms-heading { grid-template-columns: 1fr; gap: 2.5rem; }
+  .sponsor-journey-grid { grid-template-columns: repeat(2,1fr); }
+  .living-farms-grid { grid-template-columns: 1fr; }
+  .living-farms-grid article { min-height: 0; }
   .model-explorer { grid-template-columns: .8fr 1.2fr; }
   .model-outcome { grid-column: 1/-1; min-height: 130px; }
   .model-outcome > span { margin-bottom: .6rem; }
@@ -496,5 +532,9 @@ footer { padding: 45px 0; background: #061b13; color: rgba(255,255,255,.68); }
   .pillars-grid { grid-template-columns: 1fr 1fr; }
   .pillars-grid article { padding: 1.2rem .7rem; }
   .pillars-grid article:first-child { padding-left: .7rem; }
+  .sponsor-journey-grid { grid-template-columns: 1fr; }
+  .sponsor-journey-grid article { min-height: 0; }
+  .living-farms-grid article { padding: 1.5rem; }
+  .living-farms-grid h3 { margin-top: 1.7rem; }
 }
 
