@@ -35,6 +35,8 @@ function setLanguage(nextLanguage) {
   teamPrev.setAttribute('aria-label', language === 'bn' ? 'আগের দল' : 'Previous team');
   teamNext.setAttribute('aria-label', language === 'bn' ? 'পরের দল' : 'Next team');
   teamImage.alt = language === 'bn' ? `${teams[activeTeam].name} দলের ব্যাজ` : `${teams[activeTeam].name} badge`;
+  faqSearch.placeholder = faqSearch.dataset[language === 'bn' ? 'placeholderBn' : 'placeholderEn'];
+  filterFaq();
   updateAnthemState();
 }
 
@@ -97,6 +99,61 @@ roleTabs.forEach((tab, index) => {
     next.focus();
   });
 });
+
+const applicantTabs = [...document.querySelectorAll('.applicant-step')];
+const applicantPanels = [...document.querySelectorAll('.applicant-panel')];
+
+function activateApplicantStep(index) {
+  applicantTabs.forEach((tab, tabIndex) => {
+    const active = tabIndex === index;
+    tab.classList.toggle('is-active', active);
+    tab.setAttribute('aria-selected', String(active));
+    tab.tabIndex = active ? 0 : -1;
+  });
+  applicantPanels.forEach((panel, panelIndex) => {
+    const active = panelIndex === index;
+    panel.hidden = !active;
+    panel.classList.toggle('is-active', active);
+  });
+}
+
+applicantTabs.forEach((tab, index) => {
+  tab.addEventListener('click', () => activateApplicantStep(index));
+  tab.addEventListener('keydown', (event) => {
+    if (!['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(event.key)) return;
+    event.preventDefault();
+    const direction = ['ArrowRight', 'ArrowDown'].includes(event.key) ? 1 : -1;
+    const nextIndex = (index + direction + applicantTabs.length) % applicantTabs.length;
+    activateApplicantStep(nextIndex);
+    applicantTabs[nextIndex].focus();
+  });
+});
+
+const readinessInputs = [...document.querySelectorAll('.readiness-checker input')];
+const readinessScore = document.querySelector('.readiness-score');
+const readinessProgress = document.querySelector('.checker-progress span');
+const readinessMessage = document.querySelector('.checker-message');
+
+function updateReadiness() {
+  const count = readinessInputs.filter((input) => input.checked).length;
+  readinessScore.textContent = String(count);
+  readinessProgress.style.width = `${count * 25}%`;
+  readinessMessage.dataset.en = count === 4
+    ? 'You are prepared for the announced applicant journey. Wait for the verified application link.'
+    : 'Complete the checklist to prepare for the official application.';
+  readinessMessage.dataset.bn = count === 4
+    ? 'ঘোষিত আবেদন যাত্রার জন্য আপনি প্রস্তুত। যাচাইকৃত আবেদন লিঙ্কের জন্য অপেক্ষা করুন।'
+    : 'সরকারি আবেদনের প্রস্তুতির জন্য তালিকাটি সম্পূর্ণ করুন।';
+  readinessMessage.textContent = readinessMessage.dataset[language];
+  try { localStorage.setItem('krl-applicant-readiness', JSON.stringify(readinessInputs.map((input) => input.checked))); } catch (_) { /* Storage can be unavailable in privacy mode. */ }
+}
+
+try {
+  const savedReadiness = JSON.parse(localStorage.getItem('krl-applicant-readiness') || '[]');
+  readinessInputs.forEach((input, index) => { input.checked = Boolean(savedReadiness[index]); });
+} catch (_) { /* Ignore malformed or unavailable local storage. */ }
+readinessInputs.forEach((input) => input.addEventListener('change', updateReadiness));
+updateReadiness();
 
 const teams = [
   { name: 'Himalayan Giants', slug: 'himalayan-giants', chant: 'পাহাড় ভালোবাসি, ফসল ফলাবো রাশি রাশি' },
@@ -161,6 +218,7 @@ document.querySelector('.team-explorer').addEventListener('keydown', (event) => 
 });
 
 const anthemAudio = document.querySelector('.anthem-audio');
+const anthemCard = document.querySelector('.anthem-card');
 const anthemToggle = document.querySelector('.anthem-toggle');
 const anthemIcon = document.querySelector('.anthem-icon');
 const anthemProgress = document.querySelector('.anthem-progress');
@@ -174,6 +232,7 @@ function formatTime(seconds) {
 
 function updateAnthemState() {
   const playing = !anthemAudio.paused;
+  anthemCard.classList.toggle('is-playing', playing);
   anthemToggle.setAttribute('aria-pressed', String(playing));
   anthemToggle.setAttribute('aria-label', language === 'bn'
     ? (playing ? 'লীগের সংগীত থামান' : 'লীগের সংগীত চালান')
@@ -203,6 +262,27 @@ anthemProgress.addEventListener('input', () => {
   updateAnthemState();
 });
 updateAnthemState();
+
+const faqSearch = document.querySelector('.faq-search input');
+const faqItems = [...document.querySelectorAll('.faq-list details')];
+const faqEmpty = document.querySelector('.faq-empty');
+
+function filterFaq() {
+  const term = faqSearch.value.trim().toLocaleLowerCase(language === 'bn' ? 'bn' : 'en');
+  let visibleCount = 0;
+  faqItems.forEach((item) => {
+    const visible = !term || item.textContent.toLocaleLowerCase(language === 'bn' ? 'bn' : 'en').includes(term);
+    item.hidden = !visible;
+    if (visible) visibleCount += 1;
+  });
+  faqEmpty.hidden = visibleCount !== 0;
+}
+
+faqSearch.addEventListener('input', filterFaq);
+faqItems.forEach((item) => item.addEventListener('toggle', () => {
+  if (!item.open) return;
+  faqItems.forEach((other) => { if (other !== item) other.open = false; });
+}));
 
 const revealTargets = [...document.querySelectorAll('.section')];
 const staggerTargets = [...document.querySelectorAll('.numbers-grid, .journey-grid, .award-cards, .support-list')];
