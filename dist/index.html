@@ -3,24 +3,39 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#123c2b" />
+    <meta name="theme-color" content="#0036ff" />
     <meta name="description" content="Discover Krishi Ratna League Bengal, a farmer-first initiative bringing training, technology, teamwork and recognition to agricultural youth across West Bengal." />
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&amp;family=Noto+Sans+Bengali:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Anek+Bangla:wdth,wght@75..125,400..800&amp;family=Anton&amp;family=Archivo:wdth,wght@62..125,400..900&amp;display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="assets/styles.css" />
+    <script>
+      (function () {
+        var root = document.documentElement;
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        root.classList.add('motion');
+        try {
+          if (sessionStorage.getItem('krl-intro-seen')) root.classList.add('intro-seen');
+          sessionStorage.setItem('krl-intro-seen', '1');
+        } catch (_) { /* Storage can be unavailable in privacy mode. */ }
+      })();
+    </script>
     <title>Krishi Ratna League Bengal</title>
   </head>
   <body>
+    <div class="intro" aria-hidden="true">
+      <div class="intro-word"><span>K</span><span>R</span><span>L</span></div>
+      <p class="intro-sub">Krishi Ratna League · Bengal</p>
+    </div>
     <div class="scroll-progress" aria-hidden="true"><span></span></div>
-    <div class="cursor-glow" aria-hidden="true"></div>
+    <div class="cursor-ring" aria-hidden="true"></div>
     <a class="skip-link" href="#main">Skip to content</a>
 
     <header class="site-header" id="top">
       <div class="nav-shell">
         <a class="brand" href="#top" aria-label="Krishi Ratna League home">
-          <img class="site-logo" src="assets/organizers.jpg" alt="" width="1280" height="427" />
+          <img class="site-logo" src="assets/partners-light.png" alt="Karmyog for the 21st Century and Bharatiya Krishak Samaj" width="900" height="194" />
         </a>
         <nav class="desktop-nav" aria-label="Main navigation">
           <a href="#about" data-en="The league" data-bn="লীগ পরিচিতি">The league</a>
@@ -46,7 +61,7 @@
         <div class="hero-grain" aria-hidden="true"></div>
         <div class="hero-content wrap">
           <p class="eyebrow" data-en="West Bengal · A new agricultural league" data-bn="পশ্চিমবঙ্গ · কৃষির নতুন লীগ">West Bengal · A new agricultural league</p>
-          <h1 id="hero-title" data-en="The field is the arena. The farmer is the champion." data-bn="খেতই মাঠ। কৃষকই চ্যাম্পিয়ন।">The field is the arena.<br />The farmer is the champion.</h1>
+          <h1 id="hero-title" data-split data-break="sentence" data-accent-last="1" data-en="The field is the arena. The farmer is the champion." data-bn="খেতই মাঠ। কৃষকই চ্যাম্পিয়ন।">The field is the arena. The farmer is the champion.</h1>
           <p class="hero-copy" data-en="A league for 5,000 model farms across Bengal. Build with purpose, learn with your team and reconnect the world to its roots." data-bn="বাংলাজুড়ে ৫,০০০ আদর্শ খামারের এক লীগ। লক্ষ্য নিয়ে গড়ুন, দলের সঙ্গে শিখুন এবং বিশ্বকে নিজের শিকড়ের সঙ্গে যুক্ত করুন।">A league for 5,000 model farms across Bengal. Build with purpose, learn with your team and reconnect the world to its roots.</p>
           <div class="hero-actions">
             <a class="button button-primary" href="#apply" data-en="I want to apply" data-bn="আমি আবেদন করতে চাই">I want to apply</a>
@@ -62,19 +77,37 @@
         </div>
       </section>
 
-      <div class="energy-strip" aria-hidden="true">
-        <div class="energy-track">
-          <span>294 CONSTITUENCIES</span><b>✦</b><span>15 ZONAL TEAMS</span><b>✦</b><span>5,000 FARM JOURNEYS</span><b>✦</b><span>ONE BENGAL</span><b>✦</b>
-          <span>294 CONSTITUENCIES</span><b>✦</b><span>15 ZONAL TEAMS</span><b>✦</b><span>5,000 FARM JOURNEYS</span><b>✦</b><span>ONE BENGAL</span><b>✦</b>
+      <div class="marquee marquee-lime" aria-hidden="true">
+        <div class="marquee-track">
+          <span>294 Constituencies</span><b>✦</b><span>15 Zonal teams</span><b>✦</b><span>5,000 Farm journeys</span><b>✦</b><span>One Bengal</span><b>✦</b>
         </div>
       </div>
 
-      <section class="numbers" id="league-scale" aria-label="League scale">
-        <div class="wrap numbers-grid">
-          <article><strong data-count="294">0</strong><span data-en="Assembly constituencies" data-bn="বিধানসভা কেন্দ্র">Assembly constituencies</span></article>
-          <article><strong data-count="15">0</strong><span data-en="Zonal teams" data-bn="জোনাল টিম">Zonal teams</span></article>
-          <article><strong data-count="5000" data-prefix="≈" data-format="comma">0</strong><span data-en="Farms envisioned" data-bn="পরিকল্পিত খামার">Farms envisioned</span></article>
-          <article><strong data-count="1" data-suffix=" year">0</strong><span data-en="Transformation journey" data-bn="রূপান্তরের যাত্রা">Transformation journey</span></article>
+      <section class="stat-scene" id="league-scale" aria-labelledby="stat-scene-title">
+        <h2 class="sr-only" id="stat-scene-title" data-en="The league in four numbers" data-bn="চার সংখ্যায় লীগ">The league in four numbers</h2>
+        <div class="stat-sticky">
+          <article class="stat-slide stat-blue">
+            <div class="stat-meta"><span>01 / 04</span><span data-en="The map" data-bn="মানচিত্র">The map</span></div>
+            <strong class="stat-number" data-stat="294">294</strong>
+            <div class="stat-foot"><b data-en="Assembly constituencies" data-bn="বিধানসভা কেন্দ্র">Assembly constituencies</b><p data-en="Every assembly constituency in West Bengal is on the league map." data-bn="পশ্চিমবঙ্গের প্রতিটি বিধানসভা কেন্দ্র লীগের মানচিত্রে।">Every assembly constituency in West Bengal is on the league map.</p></div>
+          </article>
+          <article class="stat-slide stat-lime">
+            <div class="stat-meta"><span>02 / 04</span><span data-en="The teams" data-bn="দলসমূহ">The teams</span></div>
+            <strong class="stat-number" data-stat="15">15</strong>
+            <div class="stat-foot"><b data-en="Zonal teams" data-bn="জোনাল টিম">Zonal teams</b><p data-en="Constituencies group into regional teams, from the Himalayan Giants to the Sundarban Strikers." data-bn="বিধানসভা কেন্দ্রগুলি মিলে আঞ্চলিক দল, হিমালয়ান জায়ান্টস থেকে সুন্দরবন স্ট্রাইকার্স পর্যন্ত।">Constituencies group into regional teams, from the Himalayan Giants to the Sundarban Strikers.</p></div>
+          </article>
+          <article class="stat-slide stat-blue">
+            <div class="stat-meta"><span>03 / 04</span><span data-en="The farms" data-bn="খামার">The farms</span></div>
+            <strong class="stat-number" data-stat="5000" data-prefix="≈" data-format="comma">≈5,000</strong>
+            <div class="stat-foot"><b data-en="Farms envisioned" data-bn="পরিকল্পিত খামার">Farms envisioned</b><p data-en="Model farms to be selected from a target pool of 50,000 applicants." data-bn="৫০,০০০ আবেদনকারীর লক্ষ্য থেকে বাছাই হবে আদর্শ খামার।">Model farms to be selected from a target pool of 50,000 applicants.</p></div>
+          </article>
+          <article class="stat-slide stat-lime">
+            <div class="stat-meta"><span>04 / 04</span><span data-en="The season" data-bn="মরসুম">The season</span></div>
+            <strong class="stat-number" data-stat="365">365</strong>
+            <div class="stat-foot"><b data-en="Days. One transformation journey." data-bn="দিন। এক রূপান্তর যাত্রা।">Days. One transformation journey.</b><p data-en="One season to transform a farm with training, technology and team support." data-bn="প্রশিক্ষণ, প্রযুক্তি ও দলের সহায়তায় খামার রূপান্তরের এক মরসুম।">One season to transform a farm with training, technology and team support.</p></div>
+          </article>
+          <div class="stat-rail" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+          <div class="stat-hint" aria-hidden="true"><span data-en="Keep scrolling" data-bn="স্ক্রল করুন">Keep scrolling</span><i></i></div>
         </div>
       </section>
 
@@ -84,34 +117,64 @@
             <span data-en="A joint initiative by" data-bn="যৌথ উদ্যোগে">A joint initiative by</span>
             <strong data-en="Two organisations. One mission for Bengal's farmers." data-bn="দুই সংস্থা। বাংলার কৃষকদের জন্য এক লক্ষ্য।">Two organisations. One mission for Bengal's farmers.</strong>
           </div>
-          <img src="assets/organizers.jpg" alt="Karmyog for the 21st Century and Bharatiya Krishak Samaj" />
+          <img src="assets/partners-dark.png" alt="Karmyog for the 21st Century and Bharatiya Krishak Samaj" width="900" height="194" />
         </div>
       </section>
 
       <section class="section roots-spotlight" id="roots" aria-labelledby="roots-title">
+        <div class="roots-drift" aria-hidden="true"><span>ভিটেমাটি ✦ Bhite Mati ✦ ভিটেমাটি ✦ Bhite Mati ✦ ভিটেমাটি ✦ Bhite Mati ✦</span></div>
         <div class="wrap roots-spotlight-grid">
           <div class="roots-spotlight-copy">
             <p class="section-kicker light" data-en="The global Bengali promise" data-bn="বিশ্ববাঙালির অঙ্গীকার">The global Bengali promise</p>
-            <h2 id="roots-title" data-en="Your success travelled the world. Let it return to your Bhite Mati." data-bn="আপনার সাফল্য বিশ্বজুড়ে ছড়িয়েছে। এবার তা ফিরুক নিজের ভিটেমাটিতে।">Your success travelled the world. Let it return to your Bhite Mati.</h2>
+            <h2 id="roots-title" data-split data-accent-last="2" data-en="Your success travelled the world. Let it return to your Bhite Mati." data-bn="আপনার সাফল্য বিশ্বজুড়ে ছড়িয়েছে। এবার তা ফিরুক নিজের ভিটেমাটিতে।">Your success travelled the world. Let it return to your Bhite Mati.</h2>
             <p data-en="The proposed model pairs a Bengali or friend of Bengal with a farm near their ancestral village. Each ₹1 lakh sponsorship is described as five ₹20,000 contributions over the year. Mentoring, daily video updates and transparent digital accounts are part of the plan." data-bn="প্রস্তাবিত মডেলে একজন বাঙালি বা বাংলার বন্ধু তাঁর পূর্বপুরুষের গ্রামের কাছে একটি খামারের সঙ্গে যুক্ত হন। ₹১ লক্ষের সহযোগিতা বছরে পাঁচটি ₹২০,০০০ কিস্তিতে দেওয়ার কথা বলা হয়েছে। পরামর্শ, দৈনিক ভিডিও আপডেট এবং স্বচ্ছ ডিজিটাল হিসাবও পরিকল্পনার অংশ।">The proposed model pairs a Bengali or friend of Bengal with a farm near their ancestral village. Each ₹1 lakh sponsorship is described as five ₹20,000 contributions over the year. Mentoring, daily video updates and transparent digital accounts are part of the plan.</p>
-            <a class="button button-roots" href="#faq" data-en="Understand the sponsor pathway" data-bn="সহযোগিতার পথটি জানুন">Understand the sponsor pathway</a>
+            <a class="button button-primary" href="#faq" data-en="Understand the sponsor pathway" data-bn="সহযোগিতার পথটি জানুন">Understand the sponsor pathway</a>
           </div>
-          <div class="roots-spotlight-art" aria-hidden="true">
-            <span class="roots-rings"></span>
-            <strong>ভিটে<br />মাটি</strong>
-            <div class="roots-flow"><span>GLOBAL BENGALI</span><i>→</i><span>ONE FARMER</span><i>→</i><span>ONE YEAR</span></div>
+          <div class="roots-visual">
+            <div class="roots-map" aria-hidden="true">
+              <svg viewBox="0 0 520 400" focusable="false">
+                <g class="globe" transform="translate(112 112)">
+                  <circle r="74" class="globe-body" />
+                  <ellipse rx="74" ry="26" class="globe-line" />
+                  <line x1="-74" x2="74" class="globe-line" />
+                  <ellipse rx="74" ry="74" class="globe-meridian" />
+                  <ellipse rx="74" ry="74" class="globe-meridian" />
+                  <ellipse rx="74" ry="74" class="globe-meridian" />
+                </g>
+                <path class="route-ghost" d="M150 170 C 210 330, 330 90, 400 290" />
+                <path class="route-line" pathLength="1" d="M150 170 C 210 330, 330 90, 400 290" />
+                <g class="farm" transform="translate(400 306)">
+                  <ellipse rx="86" ry="30" class="farm-field" />
+                  <path class="farm-rows" d="M-62 -6 Q0 -22 62 -6 M-74 6 Q0 -10 74 6 M-66 18 Q0 4 66 18" />
+                  <path class="farm-house" d="M-16 -26 L0 -42 L16 -26 L16 -6 L-16 -6 Z" />
+                </g>
+                <circle class="route-dot" r="9" cx="150" cy="170" />
+              </svg>
+              <span class="map-tag tag-globe" data-en="Global Bengali" data-bn="বিশ্ববাঙালি">Global Bengali</span>
+              <span class="map-tag tag-year" data-en="One year" data-bn="এক বছর">One year</span>
+              <span class="map-tag tag-farm" data-en="One farmer" data-bn="এক কৃষক">One farmer</span>
+            </div>
+            <div class="instalments">
+              <div class="instalments-head"><strong>₹1 lakh</strong><span>= 5 × ₹20,000</span></div>
+              <ol class="instalment-bar" aria-label="Five proposed instalments of ₹20,000">
+                <li><i></i><span>01</span></li><li><i></i><span>02</span></li><li><i></i><span>03</span></li><li><i></i><span>04</span></li><li><i></i><span>05</span></li>
+              </ol>
+              <p data-en="Proposed sponsorship, spread across the year." data-bn="প্রস্তাবিত সহযোগিতা, বছরজুড়ে পাঁচ কিস্তিতে।">Proposed sponsorship, spread across the year.</p>
+            </div>
           </div>
         </div>
       </section>
 
       <section class="section sponsor-journey" aria-labelledby="sponsor-journey-title">
-        <div class="wrap">
-          <div class="sponsor-journey-heading"><div><p class="section-kicker" data-en="Bhite Mati, in practice" data-bn="ভিটেমাটি, বাস্তবে">Bhite Mati, in practice</p><h2 id="sponsor-journey-title" data-en="More than a contribution. A relationship." data-bn="শুধু অর্থসাহায্য নয়। একটি সম্পর্ক।">More than a contribution. A relationship.</h2></div><p data-en="The interview imagines a sponsor staying connected to a farm in or near their family's ancestral area. This is the proposed journey, not a live sponsorship service." data-bn="সাক্ষাৎকারে পূর্বপুরুষের এলাকার কাছে একটি খামারের সঙ্গে সহযোগীর দীর্ঘমেয়াদি সংযোগের কথা আছে। এটি প্রস্তাবিত যাত্রা, এখনই চালু সহযোগিতা পরিষেবা নয়।">The interview imagines a sponsor staying connected to a farm in or near their family's ancestral area. This is the proposed journey, not a live sponsorship service.</p></div>
-          <div class="sponsor-journey-grid">
-            <article><span>01</span><h3 data-en="Find the connection" data-bn="শিকড়ের সংযোগ খুঁজুন">Find the connection</h3><p data-en="Match a sponsor with a selected farm in or close to their ancestral constituency or village." data-bn="সহযোগীকে তাঁর পূর্বপুরুষের কেন্দ্র বা গ্রামের কাছে নির্বাচিত খামারের সঙ্গে যুক্ত করা।">Match a sponsor with a selected farm in or close to their ancestral constituency or village.</p></article>
-            <article><span>02</span><h3 data-en="Back the work" data-bn="কাজের পাশে দাঁড়ান">Back the work</h3><p data-en="The proposed ₹1 lakh support is spread across five ₹20,000 contributions during the year." data-bn="প্রস্তাবিত ₹১ লক্ষ সহায়তা বছরে পাঁচটি ₹২০,০০০ কিস্তিতে দেওয়ার কথা।">The proposed ₹1 lakh support is spread across five ₹20,000 contributions during the year.</p></article>
-            <article><span>03</span><h3 data-en="See the progress" data-bn="অগ্রগতি দেখুন">See the progress</h3><p data-en="Daily video logs, transparent digital accounts and farm metrics are envisioned for reporting. Verification rules remain to be published." data-bn="রিপোর্টের জন্য দৈনিক ভিডিও, স্বচ্ছ ডিজিটাল হিসাব ও খামারের তথ্যের পরিকল্পনা আছে। যাচাইয়ের নিয়ম এখনও প্রকাশিত হয়নি।">Daily video logs, transparent digital accounts and farm metrics are envisioned for reporting. Verification rules remain to be published.</p></article>
-            <article><span>04</span><h3 data-en="Mentor, not just fund" data-bn="শুধু অর্থ নয়, পরামর্শও">Mentor, not just fund</h3><p data-en="Sponsors may share knowledge and help farmers use appropriate technology as the farm develops." data-bn="খামার উন্নতির পথে সহযোগীরা জ্ঞান ভাগ করতে এবং উপযুক্ত প্রযুক্তি ব্যবহার করতে সাহায্য করতে পারেন।">Sponsors may share knowledge and help farmers use appropriate technology as the farm develops.</p></article>
+        <div class="hs-sticky">
+          <div class="wrap sponsor-journey-heading"><div><p class="section-kicker" data-en="Bhite Mati, in practice" data-bn="ভিটেমাটি, বাস্তবে">Bhite Mati, in practice</p><h2 id="sponsor-journey-title" data-en="More than a contribution. A relationship." data-bn="শুধু অর্থসাহায্য নয়। একটি সম্পর্ক।">More than a contribution. A relationship.</h2></div><p data-en="The interview imagines a sponsor staying connected to a farm in or near their family's ancestral area. This is the proposed journey, not a live sponsorship service." data-bn="সাক্ষাৎকারে পূর্বপুরুষের এলাকার কাছে একটি খামারের সঙ্গে সহযোগীর দীর্ঘমেয়াদি সংযোগের কথা আছে। এটি প্রস্তাবিত যাত্রা, এখনই চালু সহযোগিতা পরিষেবা নয়।">The interview imagines a sponsor staying connected to a farm in or near their family's ancestral area. This is the proposed journey, not a live sponsorship service.</p></div>
+          <div class="hs-viewport">
+            <div class="sponsor-journey-grid hs-track">
+              <article><span>01</span><h3 data-en="Find the connection" data-bn="শিকড়ের সংযোগ খুঁজুন">Find the connection</h3><p data-en="Match a sponsor with a selected farm in or close to their ancestral constituency or village." data-bn="সহযোগীকে তাঁর পূর্বপুরুষের কেন্দ্র বা গ্রামের কাছে নির্বাচিত খামারের সঙ্গে যুক্ত করা।">Match a sponsor with a selected farm in or close to their ancestral constituency or village.</p></article>
+              <article><span>02</span><h3 data-en="Back the work" data-bn="কাজের পাশে দাঁড়ান">Back the work</h3><p data-en="The proposed ₹1 lakh support is spread across five ₹20,000 contributions during the year." data-bn="প্রস্তাবিত ₹১ লক্ষ সহায়তা বছরে পাঁচটি ₹২০,০০০ কিস্তিতে দেওয়ার কথা।">The proposed ₹1 lakh support is spread across five ₹20,000 contributions during the year.</p></article>
+              <article><span>03</span><h3 data-en="See the progress" data-bn="অগ্রগতি দেখুন">See the progress</h3><p data-en="Daily video logs, transparent digital accounts and farm metrics are envisioned for reporting. Verification rules remain to be published." data-bn="রিপোর্টের জন্য দৈনিক ভিডিও, স্বচ্ছ ডিজিটাল হিসাব ও খামারের তথ্যের পরিকল্পনা আছে। যাচাইয়ের নিয়ম এখনও প্রকাশিত হয়নি।">Daily video logs, transparent digital accounts and farm metrics are envisioned for reporting. Verification rules remain to be published.</p></article>
+              <article><span>04</span><h3 data-en="Mentor, not just fund" data-bn="শুধু অর্থ নয়, পরামর্শও">Mentor, not just fund</h3><p data-en="Sponsors may share knowledge and help farmers use appropriate technology as the farm develops." data-bn="খামার উন্নতির পথে সহযোগীরা জ্ঞান ভাগ করতে এবং উপযুক্ত প্রযুক্তি ব্যবহার করতে সাহায্য করতে পারেন।">Sponsors may share knowledge and help farmers use appropriate technology as the farm develops.</p></article>
+            </div>
           </div>
         </div>
       </section>
@@ -138,6 +201,12 @@
         </div>
       </section>
 
+      <div class="marquee marquee-blue" data-direction="-1" aria-hidden="true">
+        <div class="marquee-track">
+          <span>Sat</span><b>✦</b><span lang="bn">সত্য</span><b>✦</b><span>Mangalmay</span><b>✦</b><span lang="bn">মঙ্গলময়</span><b>✦</b><span>Sundar</span><b>✦</b><span lang="bn">সুন্দর</span><b>✦</b><span>Samriddhi</span><b>✦</b><span lang="bn">সমৃদ্ধি</span><b>✦</b>
+        </div>
+      </div>
+
       <section class="section manifesto" id="about">
         <div class="wrap manifesto-grid">
           <div>
@@ -148,7 +217,7 @@
             <p data-en="Like a sporting league, KRL brings teams, a season and recognition. But here, every participant’s farm is the playing field. The one-year journey focuses on visible farm transformation supported by modern practice, management and market connections. Official scoring criteria are still awaited." data-bn="একটি ক্রীড়া লীগের মতো KRL-এ রয়েছে দল, সময়কাল ও স্বীকৃতি। তবে এখানে প্রত্যেক অংশগ্রহণকারীর খামারই খেলার মাঠ। আধুনিক পদ্ধতি, ব্যবস্থাপনা ও বাজার সংযোগের সহায়তায় এক বছরে দৃশ্যমান খামার রূপান্তরই যাত্রার কেন্দ্র। সরকারি স্কোরিং মানদণ্ড এখনও প্রকাশিত হয়নি।">Like a sporting league, KRL brings teams, a season and recognition. But here, every participant’s farm is the playing field. The one-year journey focuses on visible farm transformation supported by modern practice, management and market connections. Official scoring criteria are still awaited.</p>
             <p data-en="The newer conversation calls for agriculture's 'Kapil Dev moment': a cultural shift that makes farmers visible heroes. KRL proposes learning, competition and storytelling to help create that shift." data-bn="নতুন কথোপকথনে কৃষির জন্য ‘কপিল দেব মুহূর্ত’-এর কথা এসেছে: এমন এক সাংস্কৃতিক পরিবর্তন, যেখানে কৃষকেরা দৃশ্যমান নায়ক। শিক্ষা, প্রতিযোগিতা ও গল্প বলার মাধ্যমে KRL সেই পরিবর্তন আনতে চায়।">The newer conversation calls for agriculture's 'Kapil Dev moment': a cultural shift that makes farmers visible heroes. KRL proposes learning, competition and storytelling to help create that shift.</p>
             <blockquote>
-              <p data-en="“We are searching for the ratnas, the jewels among our farmers.”" data-bn="“আমরা কৃষকদের মধ্যে থেকে রত্নদের খুঁজে বার করছি।”">“We are searching for the ratnas, the jewels among our farmers.”</p>
+              <p data-split="fill" data-en="“We are searching for the ratnas, the jewels among our farmers.”" data-bn="“আমরা কৃষকদের মধ্যে থেকে রত্নদের খুঁজে বার করছি।”">“We are searching for the ratnas, the jewels among our farmers.”</p>
               <cite data-en="Mahacharya Sourabh J. Sarkar, interview summary" data-bn="মহাচার্য সৌরভ জে. সরকার, সাক্ষাৎকারের সারাংশ">Mahacharya Sourabh J. Sarkar, interview summary</cite>
             </blockquote>
           </div>
@@ -373,7 +442,7 @@
 
       <section class="section proof-section">
         <div class="wrap proof-grid">
-          <div class="proof-stat"><strong>60</strong><span data-en="days" data-bn="দিন">days</span></div>
+          <div class="proof-stat"><strong data-count="60">60</strong><span data-en="days" data-bn="দিন">days</span></div>
           <div><p class="section-kicker" data-en="The Munsibheri prototype" data-bn="মুনশিবেড়ির আদর্শ প্রকল্প">The Munsibheri prototype</p><h2 data-en="Can a neglected site become a model smart farm?" data-bn="অবহেলিত জমি কি আদর্শ স্মার্ট ফার্ম হতে পারে?">Can a neglected site become a model smart farm?</h2><p data-en="The source describes a 60-day plan to turn a former dumpyard at Munsibheri into an integrated model farm for the Durga Puja 2026 launch. The site should be treated as a proposed demonstration until dates, methods and measured results are published." data-bn="সূত্রে দুর্গাপুজো ২০২৬-এর সূচনার জন্য মুনশিবেড়ির প্রাক্তন বর্জ্যভূমিকে ৬০ দিনে সমন্বিত আদর্শ খামারে রূপান্তরের পরিকল্পনা বলা হয়েছে। তারিখ, পদ্ধতি ও পরিমাপযোগ্য ফল প্রকাশ না হওয়া পর্যন্ত এটিকে প্রস্তাবিত প্রদর্শনী হিসেবে দেখা উচিত।">The source describes a 60-day plan to turn a former dumpyard at Munsibheri into an integrated model farm for the Durga Puja 2026 launch. The site should be treated as a proposed demonstration until dates, methods and measured results are published.</p></div>
         </div>
       </section>
@@ -409,10 +478,16 @@
     </main>
 
     <footer>
-      <div class="wrap footer-grid">
-        <div class="brand footer-brand"><img class="site-logo" src="assets/organizers.jpg" alt="Karmyog for the 21st Century and Bharatiya Krishak Samaj" width="1280" height="427" /></div>
-        <a href="#top" data-en="Back to top ↑" data-bn="উপরে ফিরুন ↑">Back to top ↑</a>
+      <div class="marquee marquee-footer" aria-hidden="true">
+        <div class="marquee-track">
+          <span>Krishi Ratna League</span><b>✦</b><span lang="bn">কৃষিরত্ন লীগ</span><b>✦</b><span>The farmer is the champion</span><b>✦</b>
+        </div>
       </div>
+      <div class="wrap footer-grid">
+        <div class="brand footer-brand"><img class="site-logo" src="assets/partners-light.png" alt="Karmyog for the 21st Century and Bharatiya Krishak Samaj" width="900" height="194" /></div>
+        <a class="footer-top" href="#top" data-en="Back to top ↑" data-bn="উপরে ফিরুন ↑">Back to top ↑</a>
+      </div>
+      <div class="footer-giant" aria-hidden="true">KRL Bengal</div>
     </footer>
 
     <script src="assets/site.js"></script>
