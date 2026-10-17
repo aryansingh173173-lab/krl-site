@@ -429,7 +429,9 @@ if (motionOK && 'IntersectionObserver' in window) {
       }
     });
   }, { threshold: 0, rootMargin: '0px 0px -9% 0px' });
-  [...kickers, ...ups, ...staggers, ...splitTargets].forEach((element) => revealObserver.observe(element));
+  const photos = [...document.querySelectorAll('.ph')];
+  photos.forEach((element) => element.classList.add('rv-ph'));
+  [...kickers, ...ups, ...staggers, ...splitTargets, ...photos].forEach((element) => revealObserver.observe(element));
 }
 
 /* ---------- Stats scene: pinned, one number per scroll step ---------- */
@@ -577,8 +579,26 @@ const parallaxItems = [
   [document.querySelector('.manifesto'), -.18],
   [document.querySelector('footer'), -.1]
 ];
+// Photos drift a little inside their frames while on screen.
+const visiblePhotos = new Set();
+if ('IntersectionObserver' in window) {
+  const photoObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) visiblePhotos.add(entry.target);
+      else visiblePhotos.delete(entry.target);
+    });
+  }, { rootMargin: '10% 0px' });
+  document.querySelectorAll('.ph').forEach((photo) => photoObserver.observe(photo));
+}
+
 function renderParallax() {
   const viewport = window.innerHeight;
+  visiblePhotos.forEach((photo) => {
+    const rect = photo.getBoundingClientRect();
+    const limit = rect.height * .045;
+    const offset = Math.max(-limit, Math.min(limit, (rect.top + rect.height / 2 - viewport / 2) * -.06));
+    photo.style.setProperty('--py', `${offset.toFixed(1)}px`);
+  });
   hero.style.setProperty('--hero-p', clamp(window.scrollY / hero.offsetHeight).toFixed(3));
   parallaxItems.forEach(([element, speed]) => {
     const rect = element.getBoundingClientRect();
