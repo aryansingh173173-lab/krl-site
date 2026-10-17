@@ -18,7 +18,7 @@ const easeOut = (t) => 1 - Math.pow(1 - t, 3);
 let language = 'en';
 
 /* ---------- Split headings into words ---------- */
-const splitTargets = [...new Set([...document.querySelectorAll('[data-split], .section h2:not(.sr-only)')])];
+const splitTargets = [...new Set([...document.querySelectorAll('[data-split], .section h2:not(.sr-only):not(.v-prize-title)')])];
 splitTargets.forEach((element) => { if (!element.dataset.split) element.dataset.split = 'rise'; });
 
 function splitWords(element) {
@@ -73,6 +73,7 @@ function setLanguage(nextLanguage) {
   faqSearch.placeholder = faqSearch.dataset[language === 'bn' ? 'placeholderBn' : 'placeholderEn'];
   filterFaq();
   updateAnthemState();
+  renderMapCard();
   refreshLayout();
 }
 
@@ -399,8 +400,8 @@ document.querySelectorAll('a[href^="#"]').forEach((link) => {
    ========================================================= */
 
 /* ---------- Scroll reveals ---------- */
-const revealUp = '.hero-copy, .hero-actions, .model-heading > p, .teams-heading > p, .sponsor-journey-heading > p, .section-heading > p, .awards-heading > p, .living-farms-heading > p, .support-intro > p:not(.section-kicker), .faq-intro > p:not(.section-kicker), .faq-search, .roots-spotlight-copy > p:not(.section-kicker), .roots-spotlight-copy > .button, .manifesto-copy > p, blockquote cite, .score-layout > div > p:not(.section-kicker), .league-mechanics-grid > div > p:not(.section-kicker), .proof-grid > div > p:not(.section-kicker), .proof-stat, .application-status, .organizer-strip-inner > *, .roots-map, .instalments, .team-feature, .anthem-card, .role-stage, .model-explorer, .applicant-portal';
-const revealStagger = '.pillars-grid, .journey-grid, .roadmap-grid, .living-farms-grid, .award-cards, .support-list, .league-funnel, .faq-list, .score-demo, .team-rail, .role-switcher, .sponsor-journey-grid';
+const revealUp = '.hero-copy, .hero-actions, .model-heading > p, .teams-heading > p, .sponsor-journey-heading > p, .section-heading > p, .awards-heading > p, .living-farms-heading > p, .support-intro > p:not(.section-kicker), .faq-intro > p:not(.section-kicker), .faq-search, .roots-spotlight-copy > p:not(.section-kicker), .roots-spotlight-copy > .button, .manifesto-copy > p, blockquote cite, .score-layout > div > p:not(.section-kicker), .league-mechanics-grid > div > p:not(.section-kicker), .proof-grid > div > p:not(.section-kicker), .proof-stat, .application-status, .organizer-strip-inner > *, .roots-map, .instalments, .team-feature, .anthem-card, .role-stage, .model-explorer, .applicant-portal, .v-intro-row, .v-points-bar, .v-escalator-copy, .v-steps, .v-squad-ring, .v-season, .v-track, .v-economy, .v-cascade, .v-retail, .v-prize-line, .v-cta, .v-team-card, .v-map-stage';
+const revealStagger = '.pillars-grid, .journey-grid, .roadmap-grid, .living-farms-grid, .award-cards, .support-list, .league-funnel, .faq-list, .score-demo, .team-rail, .role-switcher, .sponsor-journey-grid, .v-scale, .v-chapters, .v-pillars, .v-rules, .v-guardians, .v-backer-row, .v-pipeline, .v-awards';
 
 if (motionOK && 'IntersectionObserver' in window) {
   const kickers = [...document.querySelectorAll('.section-kicker, .eyebrow')];
@@ -662,6 +663,172 @@ if (motionOK && finePointer) {
   });
 }
 
+/* ---------- KRL Vision: animated team map ---------- */
+const mapScene = document.querySelector('.v-map-scene');
+const mapSvg = mapScene.querySelector('.v-map');
+const mapRail = mapScene.querySelector('.v-map-rail');
+const mapCard = mapScene.querySelector('.v-team-card');
+const mapData = window.KRL_MAP;
+const SVG_NS = 'http://www.w3.org/2000/svg';
+const toBengaliDigits = (value) => String(value).replace(/\d/g, (digit) => '০১২৩৪৫৬৭৮৯'[digit]);
+// Team 8 and 9 share both 24 Parganas districts; their markers sit on the north and the Sundarban south.
+const nodeAnchors = { 8: ['north-24-parganas', 0], 9: ['south-24-parganas', .22] };
+const teamNotes = {
+  8: { en: 'Shares North and South 24 Parganas with Sundarbaner Baagh, split by constituency', bn: 'উত্তর ও দক্ষিণ ২৪ পরগনা সুন্দরবনের বাঘের সঙ্গে ভাগ, বিধানসভা কেন্দ্র অনুযায়ী' },
+  9: { en: 'Mangrove resilience in the Sundarban belt', bn: 'সুন্দরবন অঞ্চলে ম্যানগ্রোভের শক্তি' },
+  10: { en: 'Urban rooftop farming in Kolkata and Howrah', bn: 'কলকাতা ও হাওড়ায় শহরের ছাদে চাষ' }
+};
+let mapPaths = [];
+let mapNodes = [];
+let mapButtons = [];
+let mapProgressLine;
+let mapIndex = -1;
+let mapCardTimer;
+
+function svgElement(tag, attributes) {
+  const element = document.createElementNS(SVG_NS, tag);
+  Object.entries(attributes).forEach(([key, value]) => element.setAttribute(key, value));
+  return element;
+}
+
+function buildMap() {
+  mapSvg.setAttribute('viewBox', mapData.viewBox);
+  const districtLayer = svgElement('g', { class: 'v-districts' });
+  mapPaths = mapData.districts.map((district) => {
+    const path = svgElement('path', { d: district.d, class: 'v-dist', pathLength: 1 });
+    path.dataset.teams = district.teams.join(' ');
+    path.dataset.slug = district.slug;
+    path.addEventListener('click', () => {
+      const options = district.teams.map((team) => team - 1);
+      const next = options.includes(mapIndex) ? options[(options.indexOf(mapIndex) + 1) % options.length] : options[0];
+      goToMapTeam(next);
+    });
+    districtLayer.append(path);
+    return path;
+  });
+  mapSvg.append(districtLayer);
+
+  const centers = teams.map((_, index) => {
+    const team = index + 1;
+    const anchor = nodeAnchors[team];
+    const owned = anchor ? mapPaths.filter((path) => path.dataset.slug === anchor[0]) : mapPaths.filter((path) => path.dataset.teams.split(' ').map(Number).includes(team));
+    const boxes = owned.map((path) => path.getBBox());
+    const x1 = Math.min(...boxes.map((box) => box.x));
+    const y1 = Math.min(...boxes.map((box) => box.y));
+    const x2 = Math.max(...boxes.map((box) => box.x + box.width));
+    const y2 = Math.max(...boxes.map((box) => box.y + box.height));
+    return { x: (x1 + x2) / 2, y: (y1 + y2) / 2 + (anchor ? anchor[1] * (y2 - y1) : 0) };
+  });
+  const route = `M${centers.map((point) => `${point.x.toFixed(1)} ${point.y.toFixed(1)}`).join(' L')}`;
+  mapSvg.append(svgElement('path', { d: route, class: 'v-link' }));
+  mapProgressLine = svgElement('path', { d: route, class: 'v-link-progress', pathLength: 1 });
+  mapSvg.append(mapProgressLine);
+  mapNodes = centers.map((point) => {
+    const node = svgElement('g', { class: 'v-node', transform: `translate(${point.x.toFixed(1)} ${point.y.toFixed(1)})` });
+    node.append(svgElement('circle', { r: 7, class: 'v-node-pulse' }), svgElement('circle', { r: 4, class: 'v-node-core' }));
+    mapSvg.append(node);
+    return node;
+  });
+
+  mapButtons = teams.map((_, index) => {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.textContent = String(index + 1).padStart(2, '0');
+    button.addEventListener('click', () => goToMapTeam(index));
+    mapRail.append(button);
+    return button;
+  });
+}
+
+function renderMapCard() {
+  if (mapIndex < 0) return;
+  const team = teams[mapIndex];
+  const districts = mapData.districts.filter((district) => district.teams.includes(mapIndex + 1)).map((district) => district[language]);
+  const seats = mapData.seats[mapIndex + 1];
+  const badge = mapCard.querySelector('.v-team-badge');
+  badge.src = `assets/teams/${team.slug}-${language}.webp`;
+  badge.alt = language === 'bn' ? `${team.bn} দলের ব্যাজ` : `${team.en} badge`;
+  mapCard.querySelector('.v-team-count').innerHTML = `<b>${String(mapIndex + 1).padStart(2, '0')}</b> / 15`;
+  mapCard.querySelector('.v-team-name').textContent = team[language];
+  mapCard.querySelector('.v-team-districts').textContent = districts.join(language === 'bn' ? ', ' : ' · ');
+  mapCard.querySelector('.v-team-meta').textContent = language === 'bn'
+    ? `${toBengaliDigits(seats)}টি বিধানসভা কেন্দ্র · ৩০০টি খামার`
+    : `${seats} constituencies · 300 farms`;
+  const note = mapCard.querySelector('.v-team-note');
+  note.hidden = !teamNotes[mapIndex + 1];
+  note.textContent = teamNotes[mapIndex + 1] ? teamNotes[mapIndex + 1][language] : '';
+  mapButtons.forEach((button, index) => button.setAttribute('aria-label', teams[index][language]));
+}
+
+function setMapTeam(index) {
+  if (index === mapIndex) return;
+  const first = mapIndex < 0;
+  mapIndex = index;
+  const team = index + 1;
+  mapPaths.forEach((path) => {
+    const owners = path.dataset.teams.split(' ').map(Number);
+    path.classList.toggle('is-active', owners.includes(team));
+    path.classList.toggle('is-past', !owners.includes(team) && owners.some((owner) => owner < team));
+  });
+  mapNodes.forEach((node, nodeIndex) => {
+    node.classList.toggle('is-active', nodeIndex === index);
+    node.classList.toggle('is-past', nodeIndex < index);
+  });
+  mapButtons.forEach((button, buttonIndex) => {
+    button.classList.toggle('is-active', buttonIndex === index);
+    button.classList.toggle('is-past', buttonIndex < index);
+    button.setAttribute('aria-pressed', String(buttonIndex === index));
+  });
+  mapProgressLine.style.strokeDashoffset = (1 - index / (teams.length - 1)).toFixed(4);
+  clearTimeout(mapCardTimer);
+  if (first || !motionOK) {
+    renderMapCard();
+    return;
+  }
+  mapCard.classList.add('is-changing');
+  mapCardTimer = setTimeout(() => {
+    renderMapCard();
+    mapCard.classList.remove('is-changing');
+  }, 220);
+}
+
+function goToMapTeam(index) {
+  if (!mapScene.classList.contains('is-pinned')) {
+    setMapTeam(index);
+    return;
+  }
+  const top = mapScene.getBoundingClientRect().top + window.scrollY;
+  const travel = mapScene.offsetHeight - window.innerHeight;
+  window.scrollTo({ top: top + ((index + .5) / teams.length) * travel, behavior: reduceMotion ? 'auto' : 'smooth' });
+}
+
+function renderMap() {
+  const rect = mapScene.getBoundingClientRect();
+  const viewport = window.innerHeight;
+  if (rect.bottom < -viewport || rect.top > viewport * 1.5) return;
+  const entry = clamp((viewport - rect.top) / (viewport * .85));
+  const count = mapPaths.length;
+  mapPaths.forEach((path, index) => {
+    const drawn = clamp(entry * 1.7 - (index / count) * .7);
+    path.style.strokeDashoffset = (1 - drawn).toFixed(3);
+    path.style.fillOpacity = clamp(drawn * 1.6 - .6).toFixed(3);
+  });
+  const linksOn = clamp(entry * 2 - 1);
+  mapSvg.style.setProperty('--links', linksOn.toFixed(3));
+  const p = clamp(-rect.top / Math.max(1, rect.height - viewport));
+  setMapTeam(Math.min(teams.length - 1, Math.floor(p * teams.length)));
+}
+
+/* Hovering a pillar card highlights its share of the points bar. */
+const pointsBar = document.querySelector('.v-points-bar');
+document.querySelectorAll('.v-pillars article').forEach((card) => {
+  card.addEventListener('pointerenter', () => { pointsBar.dataset.active = card.dataset.pillar; });
+  card.addEventListener('pointerleave', () => { delete pointsBar.dataset.active; });
+});
+
+buildMap();
+setMapTeam(0);
+
 /* ---------- Frame loop ---------- */
 let lastFrame = performance.now();
 let lastScrollY = window.scrollY;
@@ -678,6 +845,7 @@ function renderScroll() {
   renderRoots();
   renderFill();
   renderJourney();
+  renderMap();
 }
 
 function frame(now) {
@@ -724,6 +892,7 @@ function refreshLayout() {
 
 if (motionOK) {
   statScene.classList.add('is-pinned');
+  mapScene.classList.add('is-pinned');
   if ('IntersectionObserver' in window) {
     const marqueeObserver = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
@@ -734,7 +903,11 @@ if (motionOK) {
     marquees.forEach((marquee) => marqueeObserver.observe(marquee.element));
   }
   refreshLayout();
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(refreshLayout);
+  if (document.fonts) {
+    // Measurements depend on Anton; re-fit once it has actually loaded.
+    document.fonts.load('400 100px Anton').then(refreshLayout, () => {});
+    document.fonts.addEventListener('loadingdone', refreshLayout);
+  }
   let resizeTimer;
   window.addEventListener('resize', () => {
     clearTimeout(resizeTimer);
