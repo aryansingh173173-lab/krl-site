@@ -339,7 +339,7 @@ function renderStats() {
 
   const active = clamp(Math.round(position), 0, last);
   statRail.forEach((bar, index) => bar.classList.toggle('is-active', index === active));
-  statSticky.dataset.tone = statSlides[active].classList.contains('stat-lime') ? 'lime' : 'blue';
+  statSticky.dataset.tone = ['lime', 'red'].find((tone) => statSlides[active].classList.contains(`stat-${tone}`)) || 'blue';
   statSticky.classList.toggle('is-done', position > last - .08);
 }
 
