@@ -42,6 +42,7 @@ function splitWords(element) {
 splitTargets.forEach(splitWords);
 
 function updateVideoToggle() {
+  if (!heroVideo) return;
   const isPaused = heroVideo.paused;
   videoToggle.setAttribute('aria-pressed', String(isPaused));
   videoToggle.setAttribute('aria-label', isPaused ? 'Play background video' : 'Pause background video');
@@ -70,18 +71,19 @@ function setLanguage(nextLanguage) {
 
 toggle.addEventListener('click', () => setLanguage(language === 'en' ? 'bn' : 'en'));
 
-videoToggle.addEventListener('click', async () => {
-  if (heroVideo.paused) {
-    try { await heroVideo.play(); } catch (_) { /* Browser may still require a direct gesture. */ }
-  } else {
-    heroVideo.pause();
-  }
+if (heroVideo && videoToggle) {
+  videoToggle.addEventListener('click', async () => {
+    if (heroVideo.paused) {
+      try { await heroVideo.play(); } catch (_) { /* Browser may still require a direct gesture. */ }
+    } else {
+      heroVideo.pause();
+    }
+    updateVideoToggle();
+  });
+  heroVideo.addEventListener('play', updateVideoToggle);
+  heroVideo.addEventListener('pause', updateVideoToggle);
   updateVideoToggle();
-});
-
-heroVideo.addEventListener('play', updateVideoToggle);
-heroVideo.addEventListener('pause', updateVideoToggle);
-updateVideoToggle();
+}
 
 /* ---------- Applicant steps ---------- */
 const applicantTabs = [...document.querySelectorAll('.applicant-step')];
@@ -120,6 +122,7 @@ const readinessProgress = document.querySelector('.checker-progress span');
 const readinessMessage = document.querySelector('.checker-message');
 
 function updateReadiness() {
+  if (!readinessScore) return;
   const count = readinessInputs.filter((input) => input.checked).length;
   readinessScore.textContent = String(count);
   readinessProgress.style.width = `${count * 25}%`;
@@ -174,6 +177,7 @@ function formatTime(seconds) {
 }
 
 function updateAnthemState() {
+  if (!anthemAudio) return;
   const playing = !anthemAudio.paused;
   anthemCard.classList.toggle('is-playing', playing);
   anthemToggle.setAttribute('aria-pressed', String(playing));
@@ -187,6 +191,7 @@ function updateAnthemState() {
   anthemTime.textContent = `${formatTime(anthemAudio.currentTime)} / ${formatTime(duration)}`;
 }
 
+if (anthemAudio) {
 anthemToggle.addEventListener('click', async () => {
   if (anthemAudio.paused) {
     try { await anthemAudio.play(); } catch (_) { /* Playback may require another direct gesture. */ }
@@ -205,6 +210,7 @@ anthemProgress.addEventListener('input', () => {
   updateAnthemState();
 });
 updateAnthemState();
+}
 
 /* ---------- FAQ ---------- */
 const faqItems = [...document.querySelectorAll('.faq-list details')];
@@ -289,10 +295,10 @@ if (motionOK && 'IntersectionObserver' in window) {
 
 /* ---------- Stats scene: pinned, one number per scroll step ---------- */
 const statScene = document.querySelector('.stat-scene');
-const statSticky = statScene.querySelector('.stat-sticky');
-const statSlides = [...statScene.querySelectorAll('.stat-slide')];
+const statSticky = statScene ? statScene.querySelector('.stat-sticky') : null;
+const statSlides = statScene ? [...statScene.querySelectorAll('.stat-slide')] : [];
 const statNumbers = statSlides.map((slide) => slide.querySelector('.stat-number'));
-const statRail = [...statScene.querySelectorAll('.stat-rail i')];
+const statRail = statScene ? [...statScene.querySelectorAll('.stat-rail i')] : [];
 
 function formatStat(element, value) {
   const formatted = element.dataset.format === 'comma' ? value.toLocaleString('en-IN') : String(value);
@@ -345,19 +351,20 @@ function renderStats() {
 
 /* ---------- Roots: route drawn by scroll, instalments fill ---------- */
 const roots = document.querySelector('.roots-spotlight');
-const routeGhost = roots.querySelector('.route-ghost');
-const routeLine = roots.querySelector('.route-line');
-const routeDot = roots.querySelector('.route-dot');
-const routeLength = routeGhost.getTotalLength();
-const mapTags = [
+const routeGhost = roots ? roots.querySelector('.route-ghost') : null;
+const routeLine = roots ? roots.querySelector('.route-line') : null;
+const routeDot = roots ? roots.querySelector('.route-dot') : null;
+const routeLength = routeGhost ? routeGhost.getTotalLength() : 0;
+const mapTags = roots ? [
   [roots.querySelector('.tag-globe'), .01],
   [roots.querySelector('.tag-year'), .5],
   [roots.querySelector('.tag-farm'), .96]
-];
-const instalments = [...roots.querySelectorAll('.instalment-bar li')];
-const rootsDrift = roots.querySelector('.roots-drift');
+] : [];
+const instalments = roots ? [...roots.querySelectorAll('.instalment-bar li')] : [];
+const rootsDrift = roots ? roots.querySelector('.roots-drift') : null;
 
 function renderRoots() {
+  if (!roots) return;
   const rect = roots.getBoundingClientRect();
   const viewport = window.innerHeight;
   const p = clamp((viewport - rect.top) / (viewport + rect.height));
@@ -394,7 +401,7 @@ const hero = document.querySelector('.hero');
 const parallaxItems = [
   [document.querySelector('.manifesto'), -.18],
   [document.querySelector('footer'), -.1]
-];
+].filter(([element]) => element);
 // Photos drift a little inside their frames while on screen.
 const visiblePhotos = new Set();
 if ('IntersectionObserver' in window) {
@@ -415,7 +422,7 @@ function renderParallax() {
     const offset = Math.max(-limit, Math.min(limit, (rect.top + rect.height / 2 - viewport / 2) * -.06));
     photo.style.setProperty('--py', `${offset.toFixed(1)}px`);
   });
-  hero.style.setProperty('--hero-p', clamp(window.scrollY / hero.offsetHeight).toFixed(3));
+  if (hero) hero.style.setProperty('--hero-p', clamp(window.scrollY / hero.offsetHeight).toFixed(3));
   parallaxItems.forEach(([element, speed]) => {
     const rect = element.getBoundingClientRect();
     if (rect.bottom < 0 || rect.top > viewport) return;
@@ -458,7 +465,7 @@ function renderChrome() {
   }
 }
 
-const navLinks = [...document.querySelectorAll('.desktop-nav a')];
+const navLinks = [...document.querySelectorAll('.desktop-nav a[href^="#"]')];
 if ('IntersectionObserver' in window) {
   const inBand = new Set();
   const navObserver = new IntersectionObserver((entries) => {
@@ -501,9 +508,9 @@ if (motionOK && finePointer) {
 
 /* ---------- KRL Vision: animated team map ---------- */
 const mapScene = document.querySelector('.v-map-scene');
-const mapSvg = mapScene.querySelector('.v-map');
-const mapRail = mapScene.querySelector('.v-map-rail');
-const mapCard = mapScene.querySelector('.v-team-card');
+const mapSvg = mapScene ? mapScene.querySelector('.v-map') : null;
+const mapRail = mapScene ? mapScene.querySelector('.v-map-rail') : null;
+const mapCard = mapScene ? mapScene.querySelector('.v-team-card') : null;
 const mapData = window.KRL_MAP;
 const SVG_NS = 'http://www.w3.org/2000/svg';
 const toBengaliDigits = (value) => String(value).replace(/\d/g, (digit) => '০১২৩৪৫৬৭৮৯'[digit]);
@@ -577,7 +584,7 @@ function buildMap() {
 }
 
 function renderMapCard() {
-  if (mapIndex < 0) return;
+  if (!mapCard || mapIndex < 0) return;
   const team = teams[mapIndex];
   const districts = mapData.districts.filter((district) => district.teams.includes(mapIndex + 1)).map((district) => district[language]);
   const seats = mapData.seats[mapIndex + 1];
@@ -642,6 +649,7 @@ function goToMapTeam(index) {
 }
 
 function renderMap() {
+  if (!mapScene) return;
   const rect = mapScene.getBoundingClientRect();
   const viewport = window.innerHeight;
   if (rect.bottom < -viewport || rect.top > viewport * 1.5) return;
@@ -661,12 +669,15 @@ function renderMap() {
 /* Hovering a pillar card highlights its share of the points bar. */
 const pointsBar = document.querySelector('.v-points-bar');
 document.querySelectorAll('.v-pillars article').forEach((card) => {
+  if (!pointsBar) return;
   card.addEventListener('pointerenter', () => { pointsBar.dataset.active = card.dataset.pillar; });
   card.addEventListener('pointerleave', () => { delete pointsBar.dataset.active; });
 });
 
-buildMap();
-setMapTeam(0);
+if (mapScene && mapData) {
+  buildMap();
+  setMapTeam(0);
+}
 
 /* ---------- Frame loop ---------- */
 let lastFrame = performance.now();
@@ -679,7 +690,7 @@ function renderScroll() {
   renderChrome();
   if (!motionOK) return;
   renderParallax();
-  if (statScene.classList.contains('is-pinned')) renderStats();
+  if (statScene && statScene.classList.contains('is-pinned')) renderStats();
   renderRoots();
   renderFill();
   renderMap();
@@ -727,8 +738,8 @@ function refreshLayout() {
 }
 
 if (motionOK) {
-  statScene.classList.add('is-pinned');
-  mapScene.classList.add('is-pinned');
+  if (statScene) statScene.classList.add('is-pinned');
+  if (mapScene) mapScene.classList.add('is-pinned');
   if ('IntersectionObserver' in window) {
     const marqueeObserver = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
@@ -754,3 +765,27 @@ if (motionOK) {
   window.addEventListener('scroll', renderChrome, { passive: true });
   renderChrome();
 }
+
+/* ---------- Phone menu ---------- */
+const menuToggle = document.querySelector('.menu-toggle');
+if (menuToggle) {
+  const closeMenu = () => {
+    document.body.classList.remove('menu-open');
+    menuToggle.setAttribute('aria-expanded', 'false');
+  };
+  menuToggle.addEventListener('click', () => {
+    const open = !document.body.classList.contains('menu-open');
+    document.body.classList.toggle('menu-open', open);
+    menuToggle.setAttribute('aria-expanded', String(open));
+  });
+  document.querySelectorAll('.desktop-nav a').forEach((link) => link.addEventListener('click', closeMenu));
+  document.addEventListener('keydown', (event) => { if (event.key === 'Escape') closeMenu(); });
+}
+
+/* ---------- Remember the language across pages (shared with the district tool) ---------- */
+toggle.addEventListener('click', () => {
+  try { localStorage.setItem('krl-lang', JSON.stringify(language)); } catch (_) { /* Storage can be unavailable. */ }
+});
+try {
+  if (JSON.parse(localStorage.getItem('krl-lang')) === 'bn') setLanguage('bn');
+} catch (_) { /* Ignore unavailable storage. */ }

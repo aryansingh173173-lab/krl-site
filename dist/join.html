@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="bn">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#0f2b7f" />
+    <meta name="color-scheme" content="light" />
+    <meta name="description" content="কৃষিরত্ন লিগ, পশ্চিমবঙ্গ। ম্যাপে আপনার জেলা ছুঁয়ে দেখুন আপনার দল, তারপর ২ মিনিটে নাম লেখান। বিনামূল্যে।" />
+    <title>Find your district · Krishi Ratna League</title>
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Anek+Bangla:wght@500;700;800&amp;family=Anton&amp;family=Hind+Siliguri:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/join.css" />
+    <script>
+      // Demo mode until the enrolment API is connected: nothing is sent anywhere.
+      window.KRL_CONFIG = { demo: true, counts: null };
+      (function () {
+        var r = document.documentElement;
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        r.classList.add('motion');
+        try {
+          if (sessionStorage.getItem('krl-intro')) r.classList.add('intro-seen');
+          sessionStorage.setItem('krl-intro', '1');
+        } catch (e) { r.classList.add('intro-seen'); }
+      })();
+    </script>
+  </head>
+  <body>
+    <div class="scrollbar" aria-hidden="true"><span></span></div>
+
+    <header class="top on-dark" id="top">
+      <a class="brand" href="index.html" data-aria-bn="কৃষিরত্ন লিগ, শুরুতে যান" data-aria-en="Krishi Ratna League, go to top" aria-label="কৃষিরত্ন লিগ, শুরুতে যান">
+        <svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="18" fill="#0a1730"/><path d="M32 49V27M32 36c-9-1-14-6-15-15 9 0 15 5 15 15Zm0-4c8-1 13-6 14-14-8 0-13 5-14 14Z" fill="none" stroke="#f3d27a" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M17 49h30" stroke="#E0A11B" stroke-width="4" stroke-linecap="round"/></svg>
+        <span data-bn="কৃষিরত্ন লিগ" data-en="Krishi Ratna League">কৃষিরত্ন লিগ</span>
+      </a>
+      <nav class="nav" data-aria-bn="মূল মেনু" data-aria-en="Main menu" aria-label="মূল মেনু" id="nav">
+        <a href="index.html" data-bn="হোম" data-en="Home">হোম</a>
+        <a href="vision.html" data-bn="ভিশন" data-en="Vision">ভিশন</a>
+        <a href="teams.html" data-bn="১৫টি দল" data-en="Teams">১৫টি দল</a>
+        <a href="bhite-mati.html" data-bn="ভিটেমাটি" data-en="Bhite Mati">ভিটেমাটি</a>
+        <a href="apply.html" data-bn="আবেদন" data-en="Apply">আবেদন</a>
+      </nav>
+      <div class="top-actions">
+        <button class="lang" type="button" id="langBtn">English</button>
+        <a class="btn small gold top-join" href="#mapSection" data-bn="নাম লেখান" data-en="Join">নাম লেখান</a>
+        <button class="icon-btn menu-btn" type="button" id="menuBtn" aria-expanded="false" aria-controls="nav" data-aria-bn="মেনু" data-aria-en="Menu" aria-label="মেনু">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <div class="net" id="netBanner" role="status" hidden data-bn="নেটওয়ার্ক নেই — উত্তর সেভ আছে" data-en="No network — your answers are saved">নেটওয়ার্ক নেই — উত্তর সেভ আছে</div>
+
+    <main id="main">
+      <section class="hero" id="mapSection" aria-labelledby="joinTitle">
+        <div class="hero-text">
+          <p class="eyebrow" data-bn="পশ্চিমবঙ্গ · ১৫টি দল" data-en="West Bengal · 15 teams">পশ্চিমবঙ্গ · ১৫টি দল</p>
+          <h2 id="joinTitle" class="join-h" data-bn="আপনার জেলার দলে যোগ দিন" data-en="Join your district's team">আপনার জেলার দলে যোগ দিন</h2>
+          <p class="lead" data-bn="ম্যাপে আপনার জেলা ছুঁয়ে দেখুন আপনার দল কোনটি। নাম লেখানো বিনামূল্যে।" data-en="Tap your district on the map to see your team. Joining is free.">ম্যাপে আপনার জেলা ছুঁয়ে দেখুন আপনার দল কোনটি। নাম লেখানো বিনামূল্যে।</p>
+          <p class="demo-note" id="demoRibbon" hidden data-bn="ডেমো সংস্করণ · আপনার তথ্য কোথাও পাঠানো হচ্ছে না" data-en="Demo version · your details are not sent anywhere">ডেমো সংস্করণ · আপনার তথ্য কোথাও পাঠানো হচ্ছে না</p>
+          <div class="resume" id="resume" hidden></div>
+          <div class="invite" id="invite" hidden></div>
+        </div>
+
+        <div class="map-wrap">
+          <button type="button" class="mic mic-hero" id="micHero" data-aria-bn="বাংলায় বলুন" data-aria-en="Speak" aria-label="বাংলায় বলুন">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>
+            <span data-bn="বাংলায় বলুন" data-en="Speak">বাংলায় বলুন</span>
+          </button>
+          <div class="nudge-bubble" id="mapNudge" role="status" aria-live="polite" hidden></div>
+          <svg class="map" id="map" role="group" aria-label="পশ্চিমবঙ্গের জেলা ম্যাপ"></svg>
+          <div class="map-labels-toggle" role="group" data-aria-bn="ম্যাপের লেখা" data-aria-en="Map labels" aria-label="ম্যাপের লেখা">
+            <button type="button" data-lab="bn" class="on" lang="bn">বাংলা</button>
+            <button type="button" data-lab="en" lang="en">English</button>
+          </div>
+        </div>
+
+        <div class="hero-tools">
+          <div class="hero-actions">
+            <button type="button" class="btn ghost" id="gpsBtn">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6-6.2-6-11a6 6 0 0 1 12 0c0 4.8-6 11-6 11z"/><circle cx="12" cy="10" r="2.2"/></svg>
+              <span data-bn="আমার এলাকা খুঁজুন" data-en="Find my area">আমার এলাকা খুঁজুন</span>
+            </button>
+            <button type="button" class="btn ghost" id="listBtn">
+              <span class="abc" aria-hidden="true" data-bn="অ-হ" data-en="A-Z">অ-হ</span>
+              <span data-bn="তালিকা থেকে বাছুন" data-en="Choose from a list">তালিকা থেকে বাছুন</span>
+            </button>
+          </div>
+          <p class="hint" id="gpsHint" role="status" aria-live="polite"></p>
+        </div>
+      </section>
+
+      <!-- District card: slides up when a district is tapped -->
+      <div class="dcard" id="dcard" role="dialog" aria-modal="false" aria-labelledby="dcardTitle" hidden>
+        <button type="button" class="x" id="dcardClose" data-aria-bn="বন্ধ করুন" data-aria-en="Close" aria-label="বন্ধ করুন">×</button>
+        <div id="dcardBody"></div>
+      </div>
+      <section class="band" id="how" aria-labelledby="howTitle">
+        <div class="wrap">
+          <p class="eyebrow reveal" data-bn="খুব সহজ" data-en="Very simple">খুব সহজ</p>
+          <h2 id="howTitle" class="reveal" data-bn="৩ ধাপে যোগ দিন" data-en="Join in 3 steps">৩ ধাপে যোগ দিন</h2>
+          <ol class="steps" id="steps">
+            <li class="step reveal">
+              <span class="step-ic" aria-hidden="true">👆</span>
+              <div><h3 data-bn="জেলা ছুঁয়ে দিন" data-en="Tap your district">জেলা ছুঁয়ে দিন</h3><p data-bn="ম্যাপে বা তালিকায় নিজের জেলা বাছুন। আপনার দল নিজে থেকেই ঠিক হয়ে যাবে।" data-en="Pick your district on the map or the list. Your team is set automatically.">ম্যাপে বা তালিকায় নিজের জেলা বাছুন। আপনার দল নিজে থেকেই ঠিক হয়ে যাবে।</p></div>
+            </li>
+            <li class="step reveal">
+              <span class="step-ic" aria-hidden="true">💬</span>
+              <div><h3 data-bn="কয়েকটা ছোট প্রশ্ন" data-en="A few short questions">কয়েকটা ছোট প্রশ্ন</h3><p data-bn="নাম, বয়স, মোবাইল, জমি আর জল। আঙুল ছুঁয়ে বা মুখে বলে। প্রায় ২ মিনিট।" data-en="Name, age, mobile, land and water. By touch or by voice. About 2 minutes.">নাম, বয়স, মোবাইল, জমি আর জল। আঙুল ছুঁয়ে বা মুখে বলে। প্রায় ২ মিনিট।</p></div>
+            </li>
+            <li class="step reveal">
+              <span class="step-ic" aria-hidden="true">🏆</span>
+              <div><h3 data-bn="আপনি দলের সদস্য" data-en="You are in the team">আপনি দলের সদস্য</h3><p data-bn="SMS-এ নথি নম্বর পাবেন। তারপর পাশের চাষি বন্ধুদের নিয়ে খামার দল গড়ুন।" data-en="You get a reference number by SMS. Then form a farm team with farmer friends nearby.">SMS-এ নথি নম্বর পাবেন। তারপর পাশের চাষি বন্ধুদের নিয়ে খামার দল গড়ুন।</p></div>
+            </li>
+          </ol>
+        </div>
+      </section>
+      <section class="band final" aria-labelledby="finalTitle">
+        <div class="wrap">
+          <h2 id="finalTitle" class="reveal" data-bn="আপনার দল অপেক্ষা করছে" data-en="Your team is waiting">আপনার দল অপেক্ষা করছে</h2>
+          <p class="lead reveal" data-bn="জেলা ছুঁয়ে দিন, কয়েকটা প্রশ্নের উত্তর দিন — ব্যস।" data-en="Tap your district, answer a few questions — that's it.">জেলা ছুঁয়ে দিন, কয়েকটা প্রশ্নের উত্তর দিন — ব্যস।</p>
+          <button type="button" class="btn big gold reveal" id="finalBtn" data-bn="নাম লেখান" data-en="Join now">নাম লেখান</button>
+        </div>
+      </section>
+    </main>
+
+    <footer class="foot-site">
+      <div class="wrap foot-grid">
+        <img src="assets/partners-light.png" width="900" height="194" loading="lazy" decoding="async" data-alt-bn="কর্মযোগ ফর দ্য ২১স্ট সেঞ্চুরি ও ভারতীয় কৃষক সমাজ" data-alt-en="Karmyog for the 21st Century and Bharatiya Krishak Samaj" alt="কর্মযোগ ফর দ্য ২১স্ট সেঞ্চুরি ও ভারতীয় কৃষক সমাজ" />
+        <p data-bn="কর্মযোগ ফর দ্য ২১স্ট সেঞ্চুরি ও ভারতীয় কৃষক সমাজের যৌথ উদ্যোগ" data-en="A joint initiative of Karmyog for the 21st Century and Bharatiya Krishak Samaj">কর্মযোগ ফর দ্য ২১স্ট সেঞ্চুরি ও ভারতীয় কৃষক সমাজের যৌথ উদ্যোগ</p>
+        <p class="privacy" data-bn="আপনার ফোন নম্বর ও সঠিক লোকেশন কখনো প্রকাশ্যে দেখানো হয় না।" data-en="Your phone number and exact location are never shown publicly.">আপনার ফোন নম্বর ও সঠিক লোকেশন কখনো প্রকাশ্যে দেখানো হয় না।</p>
+        <nav class="foot-links"><a href="index.html" data-bn="হোম" data-en="Home">হোম</a><a href="vision.html" data-bn="ভিশন" data-en="Vision">ভিশন</a><a href="teams.html" data-bn="১৫টি দল" data-en="Teams">১৫টি দল</a><a href="bhite-mati.html" data-bn="ভিটেমাটি" data-en="Bhite Mati">ভিটেমাটি</a><a href="apply.html" data-bn="আবেদন" data-en="Apply">আবেদন</a></nav>
+        <a href="#mapSection" class="to-top" data-bn="উপরে ফিরুন ↑" data-en="Back to top ↑">উপরে ফিরুন ↑</a>
+      </div>
+      <div class="foot-giant" aria-hidden="true">KRL</div>
+    </footer>
+
+    <!-- Sticky bar on phones -->
+    <div class="dock" id="dock" aria-hidden="true">
+      <button type="button" class="btn gold" id="dockBtn" tabindex="-1" data-bn="নাম লেখান" data-en="Join now">নাম লেখান</button>
+      <button type="button" class="mic mic-round" id="dockMic" tabindex="-1" data-aria-bn="বাংলায় বলুন" data-aria-en="Speak" aria-label="বাংলায় বলুন">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>
+      </button>
+    </div>
+
+    <!-- Team sheet -->
+    <div class="sheet" id="teamSheet" role="dialog" aria-modal="true" aria-labelledby="tsTitle" hidden>
+      <div class="sheet-panel team-sheet" id="teamSheetPanel"></div>
+    </div>
+
+    <!-- District list sheet -->
+    <div class="sheet" id="listSheet" role="dialog" aria-modal="true" aria-labelledby="listTitle" hidden>
+      <div class="sheet-panel">
+        <div class="sheet-head">
+          <h2 id="listTitle" data-bn="আপনার জেলা বাছুন" data-en="Choose your district">আপনার জেলা বাছুন</h2>
+          <button type="button" class="x" data-close data-aria-bn="বন্ধ করুন" data-aria-en="Close" aria-label="বন্ধ করুন">×</button>
+        </div>
+        <ul class="dlist" id="dlist"></ul>
+      </div>
+    </div>
+
+    <!-- Voice guide sheet -->
+    <div class="sheet voice-sheet" id="voiceSheet" role="dialog" aria-modal="true" aria-labelledby="vsTitle" hidden>
+      <div class="sheet-panel">
+        <div class="sheet-head">
+          <h2 id="vsTitle"><span class="vs-dot" aria-hidden="true"></span><span data-bn="সাথী" data-en="Sathi">সাথী</span> · <span id="vsState"></span></h2>
+          <button type="button" class="x" data-close data-aria-bn="বন্ধ করুন" data-aria-en="Close" aria-label="বন্ধ করুন">×</button>
+        </div>
+        <p class="vs-say" id="vsSay" aria-live="polite"></p>
+        <p class="vs-heard" id="vsHeard" aria-live="polite"></p>
+        <div class="vs-opts" id="vsOpts"></div>
+        <div class="vs-actions">
+          <button type="button" class="mic mic-big" id="vsMic" data-aria-bn="আবার বলুন" data-aria-en="Speak again" aria-label="আবার বলুন">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Enrolment flow -->
+    <div class="flow" id="flow" role="dialog" aria-modal="true" aria-labelledby="flowQ" hidden>
+      <div class="flow-top">
+        <button type="button" class="icon-btn" id="flowBack" data-aria-bn="পিছনে" data-aria-en="Back" aria-label="পিছনে">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+        </button>
+        <div class="prog" id="prog" aria-hidden="true"></div>
+        <button type="button" class="icon-btn" id="flowClose" data-aria-bn="বন্ধ করুন (উত্তর সেভ থাকবে)" data-aria-en="Close (answers are saved)" aria-label="বন্ধ করুন (উত্তর সেভ থাকবে)">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+      </div>
+      <div class="flow-body" id="flowBody"></div>
+      <div class="flow-nudge" id="flowNudge" role="status" aria-live="polite" hidden></div>
+      <div class="flow-foot" id="flowFoot">
+        <button type="button" class="btn big" id="flowNext"></button>
+        <button type="button" class="mic mic-round" id="flowMic" data-aria-bn="বাংলায় বলুন" data-aria-en="Speak" aria-label="বাংলায় বলুন">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+    <script src="assets/krl-data.js" defer></script>
+    <script src="assets/join.js" defer></script>
+  </body>
+</html>
