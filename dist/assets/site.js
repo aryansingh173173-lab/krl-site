@@ -63,15 +63,6 @@ function setLanguage(nextLanguage) {
   toggle.setAttribute('aria-pressed', String(language === 'bn'));
   toggle.setAttribute('aria-label', language === 'en' ? 'বাংলায় দেখুন' : 'View in English');
   updateVideoToggle();
-  teamPrev.setAttribute('aria-label', language === 'bn' ? 'আগের দল' : 'Previous team');
-  teamNext.setAttribute('aria-label', language === 'bn' ? 'পরের দল' : 'Next team');
-  renderTeam();
-  teamChips.forEach((chip) => {
-    const image = chip.querySelector('img');
-    image.src = `assets/teams/${image.dataset.slug}-${language}.webp`;
-  });
-  faqSearch.placeholder = faqSearch.dataset[language === 'bn' ? 'placeholderBn' : 'placeholderEn'];
-  filterFaq();
   updateAnthemState();
   renderMapCard();
   refreshLayout();
@@ -92,65 +83,7 @@ heroVideo.addEventListener('play', updateVideoToggle);
 heroVideo.addEventListener('pause', updateVideoToggle);
 updateVideoToggle();
 
-/* ---------- Tabs ---------- */
-const roleTabs = [...document.querySelectorAll('.role-tab')];
-const rolePanels = [...document.querySelectorAll('.role-panel')];
-
-const modelTabs = [...document.querySelectorAll('.model-tab')];
-const modelPanels = [...document.querySelectorAll('.model-panel')];
-
-function activateModel(model) {
-  modelTabs.forEach((tab) => {
-    const active = tab.dataset.model === model;
-    tab.classList.toggle('is-active', active);
-    tab.setAttribute('aria-selected', String(active));
-    tab.tabIndex = active ? 0 : -1;
-  });
-  modelPanels.forEach((panel) => {
-    const active = panel.id === `model-${model}`;
-    panel.hidden = !active;
-    panel.classList.toggle('is-active', active);
-  });
-}
-
-modelTabs.forEach((tab, index) => {
-  tab.addEventListener('click', () => activateModel(tab.dataset.model));
-  tab.addEventListener('keydown', (event) => {
-    if (!['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(event.key)) return;
-    event.preventDefault();
-    const direction = ['ArrowRight', 'ArrowDown'].includes(event.key) ? 1 : -1;
-    const next = modelTabs[(index + direction + modelTabs.length) % modelTabs.length];
-    activateModel(next.dataset.model);
-    next.focus();
-  });
-});
-
-function activateRole(role) {
-  roleTabs.forEach((tab) => {
-    const active = tab.dataset.role === role;
-    tab.classList.toggle('is-active', active);
-    tab.setAttribute('aria-selected', String(active));
-    tab.tabIndex = active ? 0 : -1;
-  });
-  rolePanels.forEach((panel) => {
-    const active = panel.id === `role-${role}`;
-    panel.hidden = !active;
-    panel.classList.toggle('is-active', active);
-  });
-}
-
-roleTabs.forEach((tab, index) => {
-  tab.addEventListener('click', () => activateRole(tab.dataset.role));
-  tab.addEventListener('keydown', (event) => {
-    if (!['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(event.key)) return;
-    event.preventDefault();
-    const direction = ['ArrowRight', 'ArrowDown'].includes(event.key) ? 1 : -1;
-    const next = roleTabs[(index + direction + roleTabs.length) % roleTabs.length];
-    activateRole(next.dataset.role);
-    next.focus();
-  });
-});
-
+/* ---------- Applicant steps ---------- */
 const applicantTabs = [...document.querySelectorAll('.applicant-step')];
 const applicantPanels = [...document.querySelectorAll('.applicant-panel')];
 
@@ -226,59 +159,6 @@ const teams = [
   { en: "Birbhum Ravi", bn: "বীরভূমের রবি", slug: 'birbhum-ravi', chant: "লাল মাটির দাপটে, ফলবে ফসল মাঠে মাঠে" }
 ];
 
-const teamFeature = document.querySelector('.team-feature');
-const teamImage = document.querySelector('#team-feature-image');
-const teamName = document.querySelector('#team-feature-name');
-const teamChant = document.querySelector('#team-feature-chant');
-const teamCurrent = document.querySelector('#team-current');
-const teamChips = [...document.querySelectorAll('.team-chip')];
-const teamPrev = document.querySelector('.team-prev');
-const teamNext = document.querySelector('.team-next');
-let activeTeam = 0;
-let teamChangeTimer;
-
-function renderTeam() {
-  const team = teams[activeTeam];
-  const name = team[language];
-  teamImage.src = `assets/teams/${team.slug}-${language}.webp`;
-  teamImage.alt = language === 'bn' ? `${name} দলের ব্যাজ` : `${name} badge`;
-  teamName.textContent = name;
-  teamChant.textContent = team.chant ? `“${team.chant}”` : '';
-  teamChant.hidden = !team.chant;
-  teamCurrent.textContent = String(activeTeam + 1).padStart(2, '0');
-}
-
-function showTeam(index) {
-  const nextIndex = (index + teams.length) % teams.length;
-  if (nextIndex === activeTeam) return;
-  activeTeam = nextIndex;
-  clearTimeout(teamChangeTimer);
-  teamFeature.classList.add('is-changing');
-  teamChangeTimer = setTimeout(() => {
-    renderTeam();
-    teamChips.forEach((chip, chipIndex) => {
-      const selected = chipIndex === activeTeam;
-      chip.classList.toggle('is-active', selected);
-      chip.setAttribute('aria-pressed', String(selected));
-      if (selected) {
-        const rail = chip.parentElement;
-        rail.scrollTo({ left: chip.offsetLeft - (rail.clientWidth - chip.offsetWidth) / 2, behavior: reduceMotion ? 'auto' : 'smooth' });
-      }
-    });
-    teamFeature.classList.remove('is-changing');
-  }, reduceMotion ? 0 : 260);
-}
-
-teamChips.forEach((chip) => chip.addEventListener('click', () => showTeam(Number(chip.dataset.teamIndex))));
-teamPrev.addEventListener('click', () => showTeam(activeTeam - 1));
-teamNext.addEventListener('click', () => showTeam(activeTeam + 1));
-document.querySelector('.team-explorer').addEventListener('keydown', (event) => {
-  if (!['ArrowLeft', 'ArrowRight'].includes(event.key)) return;
-  if (event.target.matches('input, audio')) return;
-  event.preventDefault();
-  showTeam(activeTeam + (event.key === 'ArrowRight' ? 1 : -1));
-});
-
 /* ---------- Anthem ---------- */
 const anthemAudio = document.querySelector('.anthem-audio');
 const anthemCard = document.querySelector('.anthem-card');
@@ -327,22 +207,8 @@ anthemProgress.addEventListener('input', () => {
 updateAnthemState();
 
 /* ---------- FAQ ---------- */
-const faqSearch = document.querySelector('.faq-search input');
 const faqItems = [...document.querySelectorAll('.faq-list details')];
-const faqEmpty = document.querySelector('.faq-empty');
 
-function filterFaq() {
-  const term = faqSearch.value.trim().toLocaleLowerCase(language === 'bn' ? 'bn' : 'en');
-  let visibleCount = 0;
-  faqItems.forEach((item) => {
-    const visible = !term || item.textContent.toLocaleLowerCase(language === 'bn' ? 'bn' : 'en').includes(term);
-    item.hidden = !visible;
-    if (visible) visibleCount += 1;
-  });
-  faqEmpty.hidden = visibleCount !== 0;
-}
-
-faqSearch.addEventListener('input', filterFaq);
 faqItems.forEach((item) => item.addEventListener('toggle', () => {
   if (!item.open) return;
   faqItems.forEach((other) => { if (other !== item) other.open = false; });
@@ -376,19 +242,6 @@ if ('IntersectionObserver' in window && motionOK) {
   counters.forEach((counter) => counterObserver.observe(counter));
 }
 
-/* ---------- Tilt cards ---------- */
-if (motionOK && finePointer) {
-  document.querySelectorAll('[data-tilt]').forEach((card) => {
-    card.addEventListener('pointermove', (event) => {
-      const bounds = card.getBoundingClientRect();
-      const rotateX = ((event.clientY - bounds.top) / bounds.height - .5) * -10;
-      const rotateY = ((event.clientX - bounds.left) / bounds.width - .5) * 10;
-      card.style.transform = `perspective(900px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-6px)`;
-    });
-    card.addEventListener('pointerleave', () => { card.style.transform = ''; });
-  });
-}
-
 document.querySelectorAll('a[href^="#"]').forEach((link) => {
   link.addEventListener('click', () => {
     if (document.activeElement === link) link.blur();
@@ -400,8 +253,8 @@ document.querySelectorAll('a[href^="#"]').forEach((link) => {
    ========================================================= */
 
 /* ---------- Scroll reveals ---------- */
-const revealUp = '.hero-copy, .hero-actions, .model-heading > p, .teams-heading > p, .sponsor-journey-heading > p, .section-heading > p, .awards-heading > p, .living-farms-heading > p, .support-intro > p:not(.section-kicker), .faq-intro > p:not(.section-kicker), .faq-search, .roots-spotlight-copy > p:not(.section-kicker), .roots-spotlight-copy > .button, .manifesto-copy > p, blockquote cite, .score-layout > div > p:not(.section-kicker), .league-mechanics-grid > div > p:not(.section-kicker), .proof-grid > div > p:not(.section-kicker), .proof-stat, .application-status, .organizer-strip-inner > *, .roots-map, .instalments, .team-feature, .anthem-card, .role-stage, .model-explorer, .applicant-portal, .v-intro-row, .v-points-bar, .v-escalator-copy, .v-steps, .v-squad-ring, .v-season, .v-track, .v-economy, .v-cascade, .v-retail, .v-prize-line, .v-cta, .v-team-card, .v-map-stage';
-const revealStagger = '.pillars-grid, .journey-grid, .roadmap-grid, .living-farms-grid, .award-cards, .support-list, .league-funnel, .faq-list, .score-demo, .team-rail, .role-switcher, .sponsor-journey-grid, .v-scale, .v-chapters, .v-pillars, .v-rules, .v-guardians, .v-backer-row, .v-pipeline, .v-awards';
+const revealUp = '.hero-copy, .hero-actions, .faq-intro > p:not(.section-kicker), .roots-spotlight-copy > p:not(.section-kicker), .roots-spotlight-copy > .button, .manifesto-copy > p, blockquote cite, .application-status, .organizer-strip-inner > *, .roots-map, .instalments, .anthem-card, .applicant-portal, .v-intro-row, .v-points-bar, .v-escalator-copy, .v-steps, .v-squad-ring, .v-season, .v-track, .v-economy, .v-cascade, .v-retail, .v-prize-line, .v-cta, .v-team-card, .v-map-stage';
+const revealStagger = '.pillars-grid, .roadmap-grid, .faq-list, .v-chapters, .v-pillars, .v-rules, .v-guardians, .v-backer-row, .v-pipeline, .v-awards';
 
 if (motionOK && 'IntersectionObserver' in window) {
   const kickers = [...document.querySelectorAll('.section-kicker, .eyebrow')];
@@ -490,32 +343,6 @@ function renderStats() {
   statSticky.classList.toggle('is-done', position > last - .08);
 }
 
-/* ---------- Sponsor journey: vertical scroll drives a sideways track ---------- */
-const hsSection = document.querySelector('.sponsor-journey');
-const hsTrack = hsSection.querySelector('.hs-track');
-const hsQuery = window.matchMedia('(min-width: 901px)');
-let hsOverflow = 0;
-
-function setupHorizontal() {
-  const enable = motionOK && hsQuery.matches;
-  hsSection.classList.toggle('is-hscroll', enable);
-  if (!enable) {
-    hsSection.style.height = '';
-    hsTrack.style.transform = '';
-    hsOverflow = 0;
-    return;
-  }
-  hsOverflow = Math.max(0, hsTrack.scrollWidth - window.innerWidth);
-  hsSection.style.height = `${window.innerHeight + hsOverflow}px`;
-}
-
-function renderHorizontal() {
-  if (!hsOverflow) return;
-  const rect = hsSection.getBoundingClientRect();
-  const p = clamp(-rect.top / Math.max(1, rect.height - window.innerHeight));
-  hsTrack.style.transform = `translate3d(${(-p * hsOverflow).toFixed(1)}px, 0, 0)`;
-}
-
 /* ---------- Roots: route drawn by scroll, instalments fill ---------- */
 const roots = document.querySelector('.roots-spotlight');
 const routeGhost = roots.querySelector('.route-ghost');
@@ -560,17 +387,6 @@ function renderFill() {
     const lit = Math.round(p * words.length);
     words.forEach((word, index) => word.classList.toggle('is-lit', index < lit));
   });
-}
-
-/* ---------- Journey line ---------- */
-const journey = document.querySelector('.journey-grid');
-const journeySteps = [...journey.children];
-function renderJourney() {
-  const rect = journey.getBoundingClientRect();
-  const viewport = window.innerHeight;
-  const p = clamp((viewport * .85 - rect.top) / (viewport * .55));
-  journey.style.setProperty('--line-p', p.toFixed(3));
-  journeySteps.forEach((step, index) => step.classList.toggle('is-lit', p >= index / journeySteps.length + .02));
 }
 
 /* ---------- Parallax + hero ---------- */
@@ -774,6 +590,9 @@ function renderMapCard() {
   mapCard.querySelector('.v-team-meta').textContent = language === 'bn'
     ? `${toBengaliDigits(seats)}টি বিধানসভা কেন্দ্র · ৩০০টি খামার`
     : `${seats} constituencies · 300 farms`;
+  const chant = mapCard.querySelector('.v-team-chant');
+  chant.hidden = !team.chant;
+  chant.textContent = team.chant ? `“${team.chant}”` : '';
   const note = mapCard.querySelector('.v-team-note');
   note.hidden = !teamNotes[mapIndex + 1];
   note.textContent = teamNotes[mapIndex + 1] ? teamNotes[mapIndex + 1][language] : '';
@@ -861,10 +680,8 @@ function renderScroll() {
   if (!motionOK) return;
   renderParallax();
   if (statScene.classList.contains('is-pinned')) renderStats();
-  renderHorizontal();
   renderRoots();
   renderFill();
-  renderJourney();
   renderMap();
 }
 
@@ -904,7 +721,6 @@ function frame(now) {
 function refreshLayout() {
   if (motionOK) {
     fitStatNumbers();
-    setupHorizontal();
     setupMarquees();
   }
   needsRender = true;
