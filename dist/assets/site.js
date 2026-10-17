@@ -126,6 +126,7 @@ function updateReadiness() {
   const count = readinessInputs.filter((input) => input.checked).length;
   readinessScore.textContent = String(count);
   readinessProgress.style.width = `${count * 25}%`;
+  if (!readinessMessage) { try { localStorage.setItem('krl-applicant-readiness', JSON.stringify(readinessInputs.map((input) => input.checked))); } catch (_) { /* ignore */ } return; }
   readinessMessage.dataset.en = count === 4
     ? 'You are prepared for the announced applicant journey. Wait for the verified application link.'
     : 'Complete the checklist to prepare for the official application.';

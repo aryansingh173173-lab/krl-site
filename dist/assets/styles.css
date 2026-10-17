@@ -1039,3 +1039,6 @@ footer { background: var(--lime); }
 }
 
 footer { background: var(--paper); border-top: 1px solid rgba(8,23,74,.1); }
+
+/* Quiet background: no outlined 294 behind the quote */
+.manifesto::after { display: none; }
