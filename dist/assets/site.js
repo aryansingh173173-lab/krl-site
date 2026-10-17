@@ -786,6 +786,7 @@ if (menuToggle) {
 toggle.addEventListener('click', () => {
   try { localStorage.setItem('krl-lang', JSON.stringify(language)); } catch (_) { /* Storage can be unavailable. */ }
 });
-try {
-  if (JSON.parse(localStorage.getItem('krl-lang')) === 'bn') setLanguage('bn');
-} catch (_) { /* Ignore unavailable storage. */ }
+// Bangla is the default; English only if the visitor chose it before.
+let savedLanguage = null;
+try { savedLanguage = JSON.parse(localStorage.getItem('krl-lang')); } catch (_) { /* Ignore unavailable storage. */ }
+if (savedLanguage !== 'en') setLanguage('bn');

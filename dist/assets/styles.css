@@ -921,3 +921,121 @@ footer > :not(.footer-bg) { position: relative; z-index: 1; }
   .subpage main > section:first-child:not(.v-map-scene):not(.roots-spotlight) { padding-top: 130px; }
 }
 @media (max-width: 560px) { .explore-grid { grid-template-columns: 1fr; } }
+
+/* =========================================================
+   Cream-led layout: less navy, navy kept for text and the map
+   ========================================================= */
+/* Header: cream once scrolled and on inner pages */
+.logo-dark { display: none; }
+.site-header.is-scrolled, .subpage .site-header { background: rgba(255,246,212,.97); color: var(--navy); box-shadow: 0 10px 30px rgba(8,23,74,.1); }
+.site-header.is-scrolled .logo-light, .subpage .site-header .logo-light { display: none; }
+.site-header.is-scrolled .logo-dark, .subpage .site-header .logo-dark { display: block; }
+.site-header.is-scrolled .desktop-nav a::after, .subpage .desktop-nav a::after { background: var(--red); }
+.site-header.is-scrolled .menu-toggle, .subpage .menu-toggle { border-color: rgba(8,23,74,.35); color: var(--navy); }
+.menu-open .site-header { color: white; }
+.menu-open .site-header .logo-light { display: block; }
+.menu-open .site-header .logo-dark { display: none; }
+
+/* Big hero button */
+.button-hero { min-height: 68px; padding: 1rem 2rem; gap: .8rem; font-size: 1rem; box-shadow: 0 16px 40px rgba(216,45,51,.4); }
+.button-hero svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; }
+.is-bengali .button-hero { font-size: 1.2rem; }
+.button-big { min-height: 64px; padding: 1rem 1.8rem; gap: .8rem; font-size: .95rem; }
+.button-big b { font-size: 1.3rem; }
+
+/* Light sections shared look */
+.pillars-section, .v-intro, .v-players, .v-engine, .v-prize, .roots-spotlight, .v-anthem, footer { color: var(--navy); }
+.pillars-section .section-kicker, .v-intro .section-kicker, .v-players .section-kicker, .v-engine .section-kicker, .v-prize .section-kicker, .roots-spotlight .section-kicker, .next-cream .section-kicker { color: var(--red); }
+.v-intro .word.is-accent, .roots-spotlight .word.is-accent, .v-engine .word.is-accent { color: var(--red); }
+
+/* Four pillars */
+.pillars-section { background: var(--lime); }
+.pillars-grid article { border-color: rgba(8,23,74,.14); background: var(--white); }
+.pillars-grid article > span, .pillars-grid article:hover > span { color: var(--red); }
+.pillars-grid article::before { background: var(--navy); }
+.pillars-grid article:hover { color: white; border-color: var(--navy); }
+
+/* Vision intro */
+.v-intro { background: var(--paper); }
+.v-intro-bg { mix-blend-mode: multiply; opacity: .12; }
+.v-contours path { stroke: rgba(216,45,51,.22); }
+.v-contours path:nth-child(even) { stroke: rgba(15,43,127,.2); }
+.v-intro-row p { color: var(--muted); }
+.v-season-pill { border-color: var(--red); color: var(--red); }
+.v-season-pill i { background: rgba(216,45,51,.3); }
+.v-season-pill i::after { background: var(--red); }
+.v-chapters a { border-color: rgba(8,23,74,.2); }
+.v-chapters b { color: var(--red); }
+.v-chapters a:hover, .v-chapters a:focus-visible { background: var(--navy); border-color: var(--navy); color: var(--lime); }
+
+/* Players */
+.v-players { background: var(--lime); }
+.v-players .v-head > p { color: rgba(8,23,74,.78); }
+.v-squad-ring::before { border-color: rgba(216,45,51,.5); }
+.v-person.is-tag { background: var(--red); }
+.v-person.is-tag svg { fill: var(--lime); }
+.v-rules li { background: var(--white); border-color: rgba(8,23,74,.1); }
+.v-rules b { color: var(--red); }
+.v-rules p { color: var(--muted); }
+.v-guard-ai { background: var(--white); }
+.v-guard-ai small { color: var(--red); }
+.v-guard-link i { background: repeating-linear-gradient(180deg, var(--red) 0 7px, transparent 7px 14px); background-size: 3px 14px; }
+.v-guard-link span { background: var(--red); color: var(--lime); }
+
+/* How it runs */
+.v-engine { background: var(--paper); }
+.v-engine .v-head > p, .v-pipeline p { color: var(--muted); }
+.v-pipeline::before { background: rgba(216,45,51,.3); }
+.v-pipeline::after { background: var(--red); box-shadow: 0 0 16px rgba(216,45,51,.6); }
+.v-pipeline b { background: var(--paper); border-color: var(--red); color: var(--red); animation-name: pipe-light-red; }
+.v-pipe-ph { background: var(--white); }
+.v-season { background: var(--white); border-color: rgba(8,23,74,.1); }
+.v-track small { color: var(--red); }
+.v-track::before { background: rgba(8,23,74,.12); }
+.v-track::after { background: var(--red); }
+.v-track li::before { border-color: var(--red); background: var(--white); }
+.v-track.is-in li::before { background: var(--red); }
+@keyframes pipe-light-red { 0%, 22% { background: var(--red); color: var(--lime); } 30%, 100% { background: var(--paper); color: var(--red); } }
+
+/* Prize */
+.v-prize { background: var(--lime); }
+.v-prize-title span { color: var(--red); }
+.v-awards > div { border-color: rgba(8,23,74,.2); background: var(--white); }
+.v-prize-line { color: var(--red); }
+.v-prize-bg { opacity: .14; }
+.v-prize-trophy { mix-blend-mode: multiply; opacity: .9; }
+.v-cta .button-ghost { border-color: var(--navy); background: transparent; color: var(--navy); backdrop-filter: none; }
+.v-cta .button-ghost:hover { color: var(--lime); }
+
+/* Bhite Mati */
+.roots-spotlight { background: var(--lime); }
+.roots-drift { -webkit-text-stroke-color: rgba(8,23,74,.1); }
+.roots-spotlight-copy > p:not(.section-kicker) { color: rgba(8,23,74,.8); }
+.instalments { background: var(--white); }
+
+/* Anthem strip after the map */
+.v-anthem { background: var(--paper); padding-top: 70px; }
+
+/* Next-step bands */
+.next-red { background: var(--red); color: var(--lime); }
+.next-red .section-kicker { color: var(--lime); }
+.next-red .button-primary { background: var(--lime); color: var(--navy); }
+.next-red .button-primary::before { background: var(--navy); }
+.next-red .button-primary:hover { color: var(--lime); }
+
+/* Footer: cream, tidy grid */
+footer { background: var(--lime); }
+.footer-bg { opacity: .1; }
+.footer-grid { grid-template-columns: 1fr auto; grid-template-areas: "brand top" "links links"; row-gap: 1.6rem; padding-top: 3.4rem; }
+.footer-brand { grid-area: brand; }
+.footer-links { grid-area: links; }
+.footer-links a { color: var(--navy); }
+.footer-links a:hover { color: var(--red); }
+.footer-top { grid-area: top; justify-self: end; align-self: center; }
+.footer-giant { color: var(--red); }
+@media (max-width: 900px) {
+  .footer-grid { grid-template-columns: 1fr; grid-template-areas: "brand" "links" "top"; }
+  .footer-top { justify-self: start; }
+}
+
+footer { background: var(--paper); border-top: 1px solid rgba(8,23,74,.1); }
