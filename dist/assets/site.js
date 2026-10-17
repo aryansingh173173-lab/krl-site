@@ -65,7 +65,11 @@ function setLanguage(nextLanguage) {
   updateVideoToggle();
   teamPrev.setAttribute('aria-label', language === 'bn' ? 'আগের দল' : 'Previous team');
   teamNext.setAttribute('aria-label', language === 'bn' ? 'পরের দল' : 'Next team');
-  teamImage.alt = language === 'bn' ? `${teams[activeTeam].name} দলের ব্যাজ` : `${teams[activeTeam].name} badge`;
+  renderTeam();
+  teamChips.forEach((chip) => {
+    const image = chip.querySelector('img');
+    image.src = `assets/teams/${image.dataset.slug}-${language}.webp`;
+  });
   faqSearch.placeholder = faqSearch.dataset[language === 'bn' ? 'placeholderBn' : 'placeholderEn'];
   filterFaq();
   updateAnthemState();
@@ -204,21 +208,21 @@ updateReadiness();
 
 /* ---------- Teams ---------- */
 const teams = [
-  { name: 'Himalayan Giants', slug: 'himalayan-giants', chant: 'পাহাড় ভালোবাসি, ফসল ফলাবো রাশি রাশি' },
-  { name: 'Terai Tigers', slug: 'terai-tigers', chant: 'বাঘের মতো লড়াই করব, ফসলে আজ ঘর ভরব' },
-  { name: 'Cooch Behar Royals', slug: 'cooch-behar-royals', chant: 'রাজার জেলার চাষী আমরা, জিততে ভালোবাসি' },
-  { name: 'Dinajpur Defenders', slug: 'dinajpur-defenders', chant: 'দিনাজপুর এগিয়ে থাকে, দেখি কে হারায় কাকে' },
-  { name: 'Malda Kings', slug: 'malda-kings', chant: 'ফলের রাজা আমের দেশে, মালদাই জয়ী হবে শেষে' },
-  { name: 'Murshidabad Nawabs', slug: 'murshidabad-nawabs', chant: 'নবাবের মাটি নবাবের দেশ, নবাবেরই মতো জেতা অভ্যেস' },
-  { name: 'Nadia Warriors', slug: 'nadia-warriors', chant: 'নদীয়ার মাটি হবে নাকো ব্যর্থ, আমরাই জিতব, এটাই সত্য' },
-  { name: 'Bardhaman Super Kings', slug: 'bardhaman-super-kings', chant: 'আমরা চাষী বর্ধমানের, দৌড়াবো আজ সমুখপানে' },
-  { name: 'Hooghly Harvesters', slug: 'hooghly-harvesters', chant: 'হুগলির হাসি হুগলির মজা, আমরাই হবো যুদ্ধের রাজা' },
-  { name: 'Birbhum Blasters', slug: 'birbhum-blasters', chant: 'লাল মাটির দাপটে, ফলবে ফসল মাঠে মাঠে' },
-  { name: 'Bankura Bulls', slug: 'bankura-bulls', chant: 'শক্ত মাটি কম জল, তবুও ফলাই জেতার ফসল' },
-  { name: 'Purulia Panthers', slug: 'purulia-panthers', chant: 'পুরুলিয়াকে রুক্ষ ভাবো? দেখো সবাইকে হারিয়ে দেবো' },
-  { name: 'Medinipur Mavericks', slug: 'medinipur-mavericks', chant: 'মাটির জেলা মেদিনীপুরে, ফলাব ফসল গোলা ভরে' },
-  { name: 'Ganga Gladiators', slug: 'ganga-gladiators', chant: 'গঙ্গা দিয়ে বইছে জল, আনন্দে আজ ফলাই ফসল' },
-  { name: 'Sundarban Strikers', slug: 'sundarban-strikers', chant: 'বনবিবির শপথ নিয়ে, বলছি যাবো ট্রফি নিয়ে' }
+  { en: "Cooch Behar Royals", bn: "কোচবিহার রয়্যালস", slug: 'cooch-behar-royals', chant: "রাজার জেলার চাষী আমরা, জিততে ভালোবাসি" },
+  { en: "Sundari Terai", bn: "সুন্দরী তেরাই", slug: 'sundari-terai', chant: "বাঘের মতো লড়াই করব, ফসলে আজ ঘর ভরব" },
+  { en: "Pahadi Sur", bn: "পাহাড়ি সুর", slug: 'pahadi-sur', chant: "পাহাড় ভালোবাসি, ফসল ফলাবো রাশি রাশি" },
+  { en: "Dinajpur Defenders", bn: "দিনাজপুর ডিফেন্ডার্স", slug: 'dinajpur-defenders', chant: "দিনাজপুর এগিয়ে থাকে, দেখি কে হারায় কাকে" },
+  { en: "Malda Joddha", bn: "মালদা যোদ্ধা", slug: 'malda-joddha', chant: "ফলের রাজা আমের দেশে, মালদাই জয়ী হবে শেষে" },
+  { en: "Murshidabad Maati", bn: "মুর্শিদাবাদ মাটি", slug: 'murshidabad-maati', chant: "নবাবের মাটি নবাবের দেশ, নবাবেরই মতো জেতা অভ্যেস" },
+  { en: "Nadia Nayak", bn: "নদীয়া নায়ক", slug: 'nadia-nayak', chant: "নদীয়ার মাটি হবে নাকো ব্যর্থ, আমরাই জিতব, এটাই সত্য" },
+  { en: "Chobbish Paraganar Poli Maati", bn: "চব্বিশ পরগনার পলি মাটি", slug: 'chobbish-paraganar-poli-maati', chant: "গঙ্গা দিয়ে বইছে জল, আনন্দে আজ ফলাই ফসল" },
+  { en: "Sundarbaner Baagh", bn: "সুন্দরবনের বাঘ", slug: 'sundarbaner-baagh', chant: "বনবিবির শপথ নিয়ে, বলছি যাবো ট্রফি নিয়ে" },
+  { en: "Pragatisheel Shilpa Taluk", bn: "প্রগতিশীল শিল্প তালুক", slug: 'pragatisheel-shilpa-taluk', chant: "" },
+  { en: "Harit Hooghly", bn: "হরিত হুগলি", slug: 'harit-hooghly', chant: "হুগলির হাসি হুগলির মজা, আমরাই হবো যুদ্ধের রাজা" },
+  { en: "Medinipur Agniban", bn: "মেদিনীপুর অগ্নিবাণ", slug: 'medinipur-agniban', chant: "মাটির জেলা মেদিনীপুরে, ফলাব ফসল গোলা ভরে" },
+  { en: "Bankura Ghoda", bn: "বাঁকুড়ার ঘোড়া", slug: 'bankura-ghoda', chant: "শক্ত মাটি কম জল, তবুও ফলাই জেতার ফসল" },
+  { en: "Sufala Bardhaman", bn: "সুফলা বর্ধমান", slug: 'sufala-bardhaman', chant: "আমরা চাষী বর্ধমানের, দৌড়াবো আজ সমুখপানে" },
+  { en: "Birbhum Ravi", bn: "বীরভূমের রবি", slug: 'birbhum-ravi', chant: "লাল মাটির দাপটে, ফলবে ফসল মাঠে মাঠে" }
 ];
 
 const teamFeature = document.querySelector('.team-feature');
@@ -232,19 +236,25 @@ const teamNext = document.querySelector('.team-next');
 let activeTeam = 0;
 let teamChangeTimer;
 
+function renderTeam() {
+  const team = teams[activeTeam];
+  const name = team[language];
+  teamImage.src = `assets/teams/${team.slug}-${language}.webp`;
+  teamImage.alt = language === 'bn' ? `${name} দলের ব্যাজ` : `${name} badge`;
+  teamName.textContent = name;
+  teamChant.textContent = team.chant ? `“${team.chant}”` : '';
+  teamChant.hidden = !team.chant;
+  teamCurrent.textContent = String(activeTeam + 1).padStart(2, '0');
+}
+
 function showTeam(index) {
   const nextIndex = (index + teams.length) % teams.length;
-  if (nextIndex === activeTeam && teamName.textContent === teams[nextIndex].name) return;
+  if (nextIndex === activeTeam) return;
   activeTeam = nextIndex;
   clearTimeout(teamChangeTimer);
   teamFeature.classList.add('is-changing');
   teamChangeTimer = setTimeout(() => {
-    const team = teams[activeTeam];
-    teamImage.src = `assets/teams/${team.slug}.jpg`;
-    teamImage.alt = language === 'bn' ? `${team.name} দলের ব্যাজ` : `${team.name} badge`;
-    teamName.textContent = team.name;
-    teamChant.textContent = `“${team.chant}”`;
-    teamCurrent.textContent = String(activeTeam + 1).padStart(2, '0');
+    renderTeam();
     teamChips.forEach((chip, chipIndex) => {
       const selected = chipIndex === activeTeam;
       chip.classList.toggle('is-active', selected);
